@@ -371,9 +371,28 @@
             text-align: center;
         }
 
+        .qr-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .qr-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qr-card-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
         .qr-wrapper {
             position: relative;
-            margin: 0 auto;
             display: inline-block;
             padding: 16px;
             background: linear-gradient(135deg, rgba(79, 143, 255, 0.1), rgba(139, 92, 246, 0.1));
@@ -1048,10 +1067,22 @@
     <!-- Contact Section -->
     <section class="contact-section">
         <h2 class="contact-title">📬 欢迎联系</h2>
-        <p class="contact-subtitle">扫码添加微信，交流AI前沿动态</p>
-        <div class="qr-wrapper">
-            <div class="qr-glow"></div>
-            <img src="wechat-qr.jpg" alt="微信二维码" class="qr-image">
+        <p class="contact-subtitle">扫码添加微信或加入AI交流群，一起探讨前沿动态</p>
+        <div class="qr-row">
+            <div class="qr-card">
+                <div class="qr-card-label">💬 添加微信</div>
+                <div class="qr-wrapper">
+                    <div class="qr-glow"></div>
+                    <img src="wechat-qr.jpg" alt="微信二维码" class="qr-image">
+                </div>
+            </div>
+            <div class="qr-card">
+                <div class="qr-card-label">🤖 AI前沿探讨与应用群</div>
+                <div class="qr-wrapper">
+                    <div class="qr-glow"></div>
+                    <img src="wechat-group.jpg" alt="AI交流群二维码" class="qr-image">
+                </div>
+            </div>
         </div>
     </section>
 
