@@ -346,6 +346,55 @@
             font-size: 13px;
         }
 
+        /* Contact Section */
+        .contact-section {
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+
+        .contact-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .contact-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .qr-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(79, 143, 255, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(79, 143, 255, 0.2);
+        }
+
+        .qr-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .qr-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(79, 143, 255, 0.15), rgba(139, 92, 246, 0.1), transparent);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
         footer a {
             color: var(--accent-blue);
             text-decoration: none;
@@ -989,14 +1038,20 @@
 
     </main>
 
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2 class="contact-title">📬 欢迎联系</h2>
+        <p class="contact-subtitle">扫码添加微信，交流AI前沿动态</p>
+        <div class="qr-wrapper">
+            <div class="qr-glow"></div>
+            <img src="wechat-qr.jpg" alt="微信二维码" class="qr-image">
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-        <div class="footer-links">
-            <a href="https://www.hudc0117.fun" target="_blank">🌐 主站</a>
-            <a href="mailto:contact@hudc0117.fun">📧 联系</a>
-        </div>
-        <p>© 2026 胡栋材的AI小栈 · www.hudc0117.fun · 每日精选AI前沿资讯</p>
-        <p style="margin-top: 8px; font-size: 11px;">内容来源于公开网络，仅供学习参考 · 更新时间：2026年4月16日</p>
+        <p>© 2026 胡栋材的AI小栈 · www.hudc0117.fun · 每晚23点更新</p>
+        <p style="margin-top: 8px; font-size: 11px;">内容来源于公开网络，仅供学习参考</p>
     </footer>
 
     <script>
