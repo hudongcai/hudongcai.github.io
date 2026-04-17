@@ -1,0 +1,30 @@
+name: AI小栈每日更新
+
+on:
+  schedule:
+    # 每天 23:00 北京时间 (UTC+8 = UTC 15:00)
+    - cron: '0 15 * * *'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run update script
+        run: python update_website.py
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git diff --quiet && git diff --cached --quiet || git commit -m "🤖 自动更新AI资讯 $(date +'%Y-%m-%d %H:%M')"
+          git push
