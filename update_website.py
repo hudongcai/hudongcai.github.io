@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-更新AI小栈网站内容 - 简化版
+更新AI小栈网站内容
 """
 
 import random
@@ -59,89 +59,6 @@ CONTENT_DB = {
     ],
 }
 
-# ========== 简化HTML模板 ==========
-HTML_TEMPLATE = '''<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>胡栋材的AI小栈 - AI前沿资讯分享</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg: #0a0a0f;
-            --card: #1a1a2e;
-            --blue: #4f8fff;
-            --purple: #8b5cf6;
-            --cyan: #06d6a0;
-            --orange: #ff6b35;
-            --pink: #ec4899;
-            --text: #e8e8f0;
-            --muted: #9898b0;
-        }
-        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-        .hero { text-align: center; padding: 80px 20px 40px; background: linear-gradient(135deg, rgba(79,143,255,0.1), rgba(139,92,246,0.1)); }
-        .hero h1 { font-size: 2.5rem; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--muted); margin-top: 10px; }
-        .update-time { margin-top: 15px; color: var(--muted); font-size: 14px; }
-        .update-time span {{ color: var(--cyan); }}
-        .nav { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
-        .nav a { padding: 10px 20px; background: var(--card); border: 1px solid #333; border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; }
-        .nav a:hover { background: #2a2a40; }
-        .nav a.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border: none; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .section { display: none; }
-        .section.active { display: block; }
-        .section h2 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .section h2 span { font-size: 1.8rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 16px; }
-        .card { background: var(--card); border: 1px solid #333; border-radius: 12px; padding: 20px; transition: all 0.3s; }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
-        .card h3 { font-size: 15px; margin-bottom: 8px; }
-        .card p { color: var(--muted); font-size: 13px; }
-        .card a { color: var(--blue); text-decoration: none; font-size: 13px; margin-top: 10px; display: inline-block; }
-        .mentor-link { background: linear-gradient(135deg, var(--blue), var(--purple)); }
-        footer { text-align: center; padding: 40px; border-top: 1px solid #333; margin-top: 40px; color: var(--muted); }
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 1.8rem; }
-        }
-    </style>
-</head>
-<body>
-    <section class="hero">
-        <h1>胡栋材的AI小栈</h1>
-        <p>汇聚全球AI最新技术、工具、应用与商业动态</p>
-        <p class="update-time">最后更新: <span>{update_time}</span> | 每天自动更新</p>
-    </section>
-    <nav class="nav">
-        <a class="active" data-section="tech">[T] AI最新技术</a>
-        <a data-section="app">[A] AI应用场景</a>
-        <a data-section="company">[C] AI公司动态</a>
-        <a data-section="business">[B] AI商业模式</a>
-        <a href="/business-mentor/" class="mentor-link">[X] 商道导师</a>
-    </nav>
-    <main class="container">
-        {sections}
-    </main>
-    <footer>
-        <p>内容来源于公开网络，仅供学习参考 | <a href="https://github.com/hudongcai/hudongcai.github.io" style="color:var(--purple)">GitHub</a></p>
-    </footer>
-    <script>
-        const navs = document.querySelectorAll('.nav a[data-section]');
-        const sections = document.querySelectorAll('.section');
-        navs.forEach(nav => {
-            nav.addEventListener('click', () => {
-                navs.forEach(n => n.classList.remove('active'));
-                nav.classList.add('active');
-                sections.forEach(s => s.classList.remove('active'));
-                document.getElementById(nav.dataset.section).classList.add('active');
-            });
-        });
-    </script>
-</body>
-</html>'''
-
 def select_items(category, count=5):
     items = CONTENT_DB.get(category, [])
     return random.sample(items, min(count, len(items)))
@@ -171,11 +88,98 @@ def generate_html(section_data):
         
         cards_html = ""
         for i, (item_title, url, item_desc) in enumerate(sec["items"], 1):
-            cards_html += f'<div class="card"><h3>{i}. {item_title}</h3><p>{item_desc}</p><a href="{url}" target="_blank">阅读原文</a></div>'
+            cards_html += '<div class="card"><h3>' + str(i) + '. ' + item_title + '</h3><p>' + item_desc + '</p><a href="' + url + '" target="_blank">阅读原文</a></div>'
         
-        sections_html += f'<section class="section active" id="{sid}"><h2><span style="background:{color};padding:8px 12px;border-radius:8px;">{icon}</span> {title}</h2><p style="color:var(--muted);margin-bottom:20px;">{desc}</p><div class="grid">{cards_html}</div></section>'
+        sections_html += '<section class="section active" id="' + sid + '"><h2><span style="background:' + color + ';padding:8px 12px;border-radius:8px;">' + icon + '</span> ' + title + '</h2><p style="color:var(--muted);margin-bottom:20px;">' + desc + '</p><div class="grid">' + cards_html + '</div></section>'
     
-    return HTML_TEMPLATE.format(update_time=today, sections=sections_html)
+    # 使用字符串替换而不是format
+    html = HTML_TEMPLATE
+    html = html.replace("{{UPDATE_TIME}}", today)
+    html = html.replace("{{SECTIONS}}", sections_html)
+    return html
+
+# ========== HTML模板 ==========
+HTML_TEMPLATE = '''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>胡栋材的AI小栈 - AI前沿资讯分享</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --card: #1a1a2e;
+            --blue: #4f8fff;
+            --purple: #8b5cf6;
+            --cyan: #06d6a0;
+            --orange: #ff6b35;
+            --pink: #ec4899;
+            --text: #e8e8f0;
+            --muted: #9898b0;
+        }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .hero { text-align: center; padding: 80px 20px 40px; background: linear-gradient(135deg, rgba(79,143,255,0.1), rgba(139,92,246,0.1)); }
+        .hero h1 { font-size: 2.5rem; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--muted); margin-top: 10px; }
+        .update-time { margin-top: 15px; color: var(--muted); font-size: 14px; }
+        .update-time span { color: var(--cyan); }
+        .nav { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
+        .nav a { padding: 10px 20px; background: var(--card); border: 1px solid #333; border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; }
+        .nav a:hover { background: #2a2a40; }
+        .nav a.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .section h2 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section h2 span { font-size: 1.8rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 16px; }
+        .card { background: var(--card); border: 1px solid #333; border-radius: 12px; padding: 20px; transition: all 0.3s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .card h3 { font-size: 15px; margin-bottom: 8px; }
+        .card p { color: var(--muted); font-size: 13px; }
+        .card a { color: var(--blue); text-decoration: none; font-size: 13px; margin-top: 10px; display: inline-block; }
+        .mentor-link { background: linear-gradient(135deg, var(--blue), var(--purple)); }
+        footer { text-align: center; padding: 40px; border-top: 1px solid #333; margin-top: 40px; color: var(--muted); }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>胡栋材的AI小栈</h1>
+        <p>汇聚全球AI最新技术、工具、应用与商业动态</p>
+        <p class="update-time">最后更新: <span>{{UPDATE_TIME}}</span> | 每天自动更新</p>
+    </section>
+    <nav class="nav">
+        <a class="active" data-section="tech">[T] AI最新技术</a>
+        <a data-section="app">[A] AI应用场景</a>
+        <a data-section="company">[C] AI公司动态</a>
+        <a data-section="business">[B] AI商业模式</a>
+        <a href="/business-mentor/" class="mentor-link">[X] 商道导师</a>
+    </nav>
+    <main class="container">
+        {{SECTIONS}}
+    </main>
+    <footer>
+        <p>内容来源于公开网络，仅供学习参考 | <a href="https://github.com/hudongcai/hudongcai.github.io" style="color:var(--purple)">GitHub</a></p>
+    </footer>
+    <script>
+        const navs = document.querySelectorAll('.nav a[data-section]');
+        const sections = document.querySelectorAll('.section');
+        navs.forEach(nav => {
+            nav.addEventListener('click', () => {
+                navs.forEach(n => n.classList.remove('active'));
+                nav.classList.add('active');
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(nav.dataset.section).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>'''
 
 def main():
     print("[START] Updating AI News Website")
@@ -186,15 +190,15 @@ def main():
     for section_id in section_configs:
         items = select_items(section_id, 5)
         section_data.append({"id": section_id, "items": items})
-        print(f"[OK] {section_id}: {len(items)} items selected")
+        print("[OK] " + section_id + ": " + str(len(items)) + " items selected")
     
     html_content = generate_html(section_data)
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
-    print(f"[DONE] index.html generated ({len(html_content)} bytes)")
-    print(f"[INFO] {len(section_data)} sections, 5 items each")
+    print("[DONE] index.html generated (" + str(len(html_content)) + " bytes)")
+    print("[INFO] " + str(len(section_data)) + " sections, 5 items each")
     
     return 0
 
