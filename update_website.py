@@ -13,39 +13,71 @@ import json
 import os
 from datetime import datetime
 
-# ========== AI工具库 ==========
-AI_TOOLS = [
-    ("ChatGPT", "https://chat.openai.com", "OpenAI开发的大语言模型，支持对话、写作、编程等多种场景"),
-    ("Claude", "https://claude.ai", "Anthropic推出的AI助手，擅长长文本分析和创意写作"),
-    ("DeepSeek", "https://chat.deepseek.com", "国产开源大模型，性价比高，支持深度推理"),
-    ("Kimi", "https://kimi.moonshot.cn", "月之暗面推出的AI助手，支持超长上下文"),
-    ("文心一言", "https://yiyan.baidu.com", "百度推出的国产大语言模型，中文能力强"),
-    ("通义千问", "https://tongyi.aliyun.com", "阿里云推出的大语言模型，支持多轮对话"),
-    ("讯飞星火", "https://xinghuo.xfyun.cn", "科大讯飞推出的认知大模型"),
-    ("智谱清言", "https://www.zhipuai.cn", "智谱AI推出的对话助手"),
-    ("Midjourney", "https://www.midjourney.com", "AI图像生成工具，支持艺术风格创作"),
-    ("Stable Diffusion", "https://stability.ai", "开源AI图像生成模型，可本地部署"),
-    ("DALL-E", "https://openai.com/dall-e-3", "OpenAI推出的AI绘图工具"),
-    ("Runway", "https://runwayml.com", "AI视频生成和编辑平台"),
-    ("Sora", "https://openai.com/sora", "OpenAI推出的AI视频生成模型"),
-    ("Notion AI", "https://notion.so", "笔记工具的AI助手，支持写作和整理"),
-    ("Copilot", "https://github.com/features/copilot", "GitHub推出的AI编程助手"),
-    ("Cursor", "https://cursor.sh", "AI代码编辑器，集成GPT-4"),
-    ("Gamma", "https://gamma.app", "AI幻灯片生成工具"),
-    ("Beautiful.ai", "https://www.beautiful.ai", "AI驱动的演示文稿设计工具"),
-    ("Canva AI", "https://www.canva.com", "设计平台的AI功能集成"),
-    ("Jasper", "https://www.jasper.ai", "AI营销内容生成工具"),
-    ("Copy.ai", "https://www.copy.ai", "AI文案写作工具"),
-    ("Writesonic", "https://writesonic.com", "AI内容创作平台"),
-    ("Rytr", "https://rytr.me", "AI写作助手，性价比高"),
-    ("Perplexity", "https://www.perplexity.ai", "AI搜索引擎，结合实时信息"),
-    ("Consensus", "https://consensus.app", "AI学术论文搜索引擎"),
-    ("Elicit", "https://elicit.org", "AI研究助手，辅助文献综述"),
-    ("Character.AI", "https://character.ai", "AI角色扮演对话平台"),
-    ("Pi AI", "https://pi.ai", "Inflection推出的个人AI助手"),
-    (" Poe", "https://poe.com", "Quora推出的AI聊天聚合平台"),
-    ("Gemini", "https://gemini.google.com", "Google推出的多模态AI助手"),
-]
+# ========== AI工具库（分门别类） ==========
+AI_TOOLS_BY_CATEGORY = {
+    "💬 对话AI": [
+        ("ChatGPT", "https://chat.openai.com", "OpenAI开发的大语言模型，支持对话、写作、编程等多种场景"),
+        ("Claude", "https://claude.ai", "Anthropic推出的AI助手，擅长长文本分析和创意写作"),
+        ("Gemini", "https://gemini.google.com", "Google推出的多模态AI助手"),
+        ("DeepSeek", "https://chat.deepseek.com", "国产开源大模型，性价比高，支持深度推理"),
+        ("Kimi", "https://kimi.moonshot.cn", "月之暗面推出的AI助手，支持超长上下文"),
+        ("文心一言", "https://yiyan.baidu.com", "百度推出的国产大语言模型，中文能力强"),
+        ("通义千问", "https://tongyi.aliyun.com", "阿里云推出的大语言模型，支持多轮对话"),
+        ("讯飞星火", "https://xinghuo.xfyun.cn", "科大讯飞推出的认知大模型"),
+        ("智谱清言", "https://www.zhipuai.cn", "智谱AI推出的对话助手"),
+    ],
+    "🎨 图像生成": [
+        ("Midjourney", "https://www.midjourney.com", "AI图像生成工具，支持艺术风格创作"),
+        ("Stable Diffusion", "https://stability.ai", "开源AI图像生成模型，可本地部署"),
+        ("DALL-E", "https://openai.com/dall-e-3", "OpenAI推出的AI绘图工具"),
+        ("Adobe Firefly", "https://firefly.adobe.com", "Adobe推出的AI图像生成工具"),
+        ("Ideogram", "https://ideogram.ai", "AI图像生成，支持文字渲染"),
+        ("Leonardo.ai", "https://leonardo.ai", "游戏和创意领域的AI图像生成"),
+    ],
+    "🎬 视频制作": [
+        ("Runway", "https://runwayml.com", "AI视频生成和编辑平台"),
+        ("Sora", "https://openai.com/sora", "OpenAI推出的AI视频生成模型"),
+        ("Pika", "https://pika.art", "AI视频生成新兴力量"),
+        ("HeyGen", "https://heygen.com", "AI数字人视频制作"),
+        ("剪映", "https://www.capcut.cn", "字节跳动AI视频剪辑工具"),
+    ],
+    "💻 编程开发": [
+        ("GitHub Copilot", "https://github.com/features/copilot", "GitHub推出的AI编程助手"),
+        ("Cursor", "https://cursor.sh", "AI代码编辑器，集成GPT-4"),
+        ("Codeium", "https://codeium.com", "免费AI编程助手"),
+        ("Tabnine", "https://tabnine.com", "AI代码补全工具"),
+        ("Replit", "https://replit.com", "AI驱动的在线编程平台"),
+    ],
+    "📝 写作办公": [
+        ("Notion AI", "https://notion.so", "笔记工具的AI助手，支持写作和整理"),
+        ("Gamma", "https://gamma.app", "AI幻灯片生成工具"),
+        ("Beautiful.ai", "https://www.beautiful.ai", "AI驱动的演示文稿设计工具"),
+        ("Canva AI", "https://www.canva.com", "设计平台的AI功能集成"),
+        ("飞书妙记", "https://www.feishu.cn", "字节跳动AI会议记录工具"),
+    ],
+    "📢 内容营销": [
+        ("Jasper", "https://www.jasper.ai", "AI营销内容生成工具"),
+        ("Copy.ai", "https://www.copy.ai", "AI文案写作工具"),
+        ("Writesonic", "https://writesonic.com", "AI内容创作平台"),
+        ("Rytr", "https://rytr.me", "AI写作助手，性价比高"),
+    ],
+    "🔍 搜索研究": [
+        ("Perplexity", "https://www.perplexity.ai", "AI搜索引擎，结合实时信息"),
+        ("Consensus", "https://consensus.app", "AI学术论文搜索引擎"),
+        ("Elicit", "https://elicit.org", "AI研究助手，辅助文献综述"),
+    ],
+    "🎭 创意娱乐": [
+        ("Character.AI", "https://character.ai", "AI角色扮演对话平台"),
+        ("Pi AI", "https://pi.ai", "Inflection推出的个人AI助手"),
+        ("Poe", "https://poe.com", "Quora推出的AI聊天聚合平台"),
+        ("Suno", "https://suno.ai", "AI音乐生成工具"),
+    ],
+}
+
+# 扁平化列表（保持兼容性）
+AI_TOOLS = []
+for tools in AI_TOOLS_BY_CATEGORY.values():
+    AI_TOOLS.extend(tools)
 
 # ========== AI资讯库 ==========
 CONTENT_DB = {
@@ -143,13 +175,28 @@ def save_to_history(content_data, history_file="history.json"):
     
     return len(history)
 
-def generate_html(ai_tools, ai_news, history_file="history.json"):
+def generate_html(ai_tools_by_category, ai_news, history_file="history.json"):
     today = datetime.now().strftime("%Y-%m-%d %H:%M")
     
-    # 生成工具卡片
+    # 生成工具卡片（按分类）
     tools_html = ""
-    for tool_name, tool_url, tool_desc in ai_tools:
-        tools_html += '<div class="tool-card"><h3><a href="' + tool_url + '" target="_blank">' + tool_name + '</a></h3><p>' + tool_desc + '</p><a href="' + tool_url + '" target="_blank" class="tool-link">访问网站</a></div>'
+    category_colors = {
+        "💬 对话AI": "linear-gradient(135deg, #4f8fff, #8b5cf6)",
+        "🎨 图像生成": "linear-gradient(135deg, #ec4899, #f472b6)",
+        "🎬 视频制作": "linear-gradient(135deg, #ff6b35, #fbbf24)",
+        "💻 编程开发": "linear-gradient(135deg, #06d6a0, #10b981)",
+        "📝 写作办公": "linear-gradient(135deg, #8b5cf6, #a78bfa)",
+        "📢 内容营销": "linear-gradient(135deg, #f59e0b, #fbbf24)",
+        "🔍 搜索研究": "linear-gradient(135deg, #3b82f6, #60a5fa)",
+        "🎭 创意娱乐": "linear-gradient(135deg, #ec4899, #f9a8d4)",
+    }
+    
+    for cat_name, tools in ai_tools_by_category.items():
+        cat_color = category_colors.get(cat_name, "linear-gradient(135deg, #4f8fff, #8b5cf6)")
+        tools_html += '<div class="tool-category"><h3 class="cat-title" style="background:' + cat_color + ';">' + cat_name + ' (' + str(len(tools)) + ')</h3><div class="tool-grid">'
+        for tool_name, tool_url, tool_desc in tools:
+            tools_html += '<div class="tool-card"><h4><a href="' + tool_url + '" target="_blank">' + tool_name + '</a></h4><p>' + tool_desc + '</p><a href="' + tool_url + '" target="_blank" class="tool-link">访问网站</a></div>'
+        tools_html += '</div></div>'
     
     # 生成资讯卡片
     news_html = ""
@@ -224,12 +271,14 @@ def generate_html(ai_tools, ai_news, history_file="history.json"):
         .section h2 { font-size: 1.4rem; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
         .section h2 span { font-size: 1.6rem; }
         .section > p { color: var(--muted); margin-bottom: 24px; font-size: 14px; }
+        .tool-category { margin-bottom: 32px; }
+        .cat-title { display: inline-block; padding: 10px 20px; border-radius: 25px; font-size: 15px; font-weight: 600; color: white; margin-bottom: 16px; }
         .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s; }
         .tool-card:hover { background: var(--card-hover); border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
-        .tool-card h3 { font-size: 16px; margin-bottom: 8px; }
-        .tool-card h3 a { color: var(--text); text-decoration: none; cursor: pointer; transition: color 0.3s; }
-        .tool-card h3 a:hover { color: var(--blue); }
+        .tool-card h4 { font-size: 16px; margin-bottom: 8px; }
+        .tool-card h4 a { color: var(--text); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+        .tool-card h4 a:hover { color: var(--blue); }
         .tool-card p { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
         .tool-link { display: inline-block; padding: 6px 14px; background: linear-gradient(135deg, var(--blue), var(--purple)); border-radius: 20px; color: white; text-decoration: none; font-size: 13px; transition: all 0.3s; }
         .tool-link:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(79,143,255,0.4); }
@@ -339,8 +388,8 @@ def main():
     
     history_file = "history.json"
     
-    # 获取AI工具（固定展示）
-    ai_tools = AI_TOOLS[:30]  # 展示30个工具
+    # 获取AI工具（分门别类）
+    ai_tools_by_category = AI_TOOLS_BY_CATEGORY
     
     # 获取AI资讯
     ai_news = get_ai_news(count=10, history_file=history_file)
@@ -348,12 +397,13 @@ def main():
     # 保存历史
     content_data = {"news": ai_news}
     history_count = save_to_history(content_data, history_file)
-    print("[OK] AI Tools: " + str(len(ai_tools)) + " items")
+    total_tools = sum(len(tools) for tools in ai_tools_by_category.values())
+    print("[OK] AI Tools: " + str(total_tools) + " items (" + str(len(ai_tools_by_category)) + " categories)")
     print("[OK] AI News: " + str(len(ai_news)) + " items")
     print("[OK] History saved: " + str(history_count) + " days")
     
     # 生成HTML
-    html_content = generate_html(ai_tools, ai_news, history_file)
+    html_content = generate_html(ai_tools_by_category, ai_news, history_file)
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
