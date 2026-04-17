@@ -222,8 +222,10 @@ def generate_html(ai_tools_by_category, ai_news, history_file="history.json"):
                 if history_items:
                     history_html = '''
         <section class="section" id="history">
-            <h2><span style="background:rgba(139,92,246,0.15);padding:8px 12px;border-radius:8px;">[*]</span> 往期回顾</h2>
-            <p style="color:var(--muted);margin-bottom:20px;">最近7天的AI资讯回顾</p>
+            <div class="section-header">
+                <h2>往期回顾</h2>
+                <p>最近7天的AI资讯回顾</p>
+            </div>
             <div class="history-list">''' + history_items + '''
             </div>
         </section>'''
@@ -262,17 +264,19 @@ def generate_html(ai_tools_by_category, ai_news, history_file="history.json"):
         .nav a { padding: 10px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; font-size: 14px; }
         .nav a:hover { background: var(--card-hover); border-color: var(--blue); }
         .nav a.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border: none; box-shadow: 0 4px 15px rgba(79,143,255,0.3); }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px 20px 60px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px 60px; }
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* 通用标题样式 */
+        .section-header { margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+        .section-header h2 { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+        .section-header p { color: var(--muted); font-size: 14px; }
+        
         /* AI工具模块 */
-        .section h2 { font-size: 1.4rem; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
-        .section h2 span { font-size: 1.6rem; }
-        .section > p { color: var(--muted); margin-bottom: 24px; font-size: 14px; }
         .tool-category { margin-bottom: 32px; }
-        .cat-title { display: inline-block; padding: 10px 20px; border-radius: 25px; font-size: 15px; font-weight: 600; color: white; margin-bottom: 16px; }
+        .cat-title { display: inline-block; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: 600; color: white; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s; }
         .tool-card:hover { background: var(--card-hover); border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
@@ -327,10 +331,10 @@ def generate_html(ai_tools_by_category, ai_news, history_file="history.json"):
         <div class="update-time">最后更新: <span>{{UPDATE_TIME}}</span> | 每日自动更新</div>
     </section>
     <nav class="nav">
-        <a class="active" data-section="tools">[1] AI工具</a>
-        <a data-section="news">[2] AI资讯</a>
-        <a href="/business-mentor/">[3] AI商业</a>
-        <a data-section="history">[*] 往期回顾</a>
+        <a class="active" data-section="tools">AI工具集</a>
+        <a data-section="news">AI资讯</a>
+        <a href="/business-mentor/">AI商业</a>
+        <a data-section="history">往期回顾</a>
     </nav>
     <div class="qr-section">
         <div class="qr-item">
@@ -344,13 +348,17 @@ def generate_html(ai_tools_by_category, ai_news, history_file="history.json"):
     </div>
     <main class="container">
         <section class="section active" id="tools">
-            <h2><span style="background:rgba(79, 143, 255, 0.15);padding:8px 12px;border-radius:8px;">[1]</span> AI工具集</h2>
-            <p>收录主流AI工具，名称、网址、简介一目了然</p>
+            <div class="section-header">
+                <h2>AI工具集</h2>
+                <p>收录主流AI工具，名称、网址、简介一目了然</p>
+            </div>
             <div class="tool-grid">{{TOOLS}}</div>
         </section>
         <section class="section" id="news">
-            <h2><span style="background:rgba(6, 214, 160, 0.15);padding:8px 12px;border-radius:8px;">[2]</span> AI资讯</h2>
-            <p>每日精选AI技术动态、应用场景、公司消息</p>
+            <div class="section-header">
+                <h2>AI资讯</h2>
+                <p>每日精选AI技术动态、应用场景、公司消息</p>
+            </div>
             <div class="card-list">{{NEWS}}</div>
         </section>
         {{HISTORY}}
