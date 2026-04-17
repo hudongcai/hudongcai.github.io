@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AI小栈网站内容更新脚本 V2.0
-- 每个板块10条内容，使用真实可验证的链接
-- 内容去重机制，避免重复展示
-- 往期回顾功能，保存历史内容
+AI小栈网站内容更新脚本 V3.0
+- 3大模块：AI工具、AI资讯、AI商业
+- AI工具：收录热门AI工具的名称、网址、简介
+- AI资讯：技术动态、应用场景、公司消息
+- AI商业：商道导师商业案例
 """
 
 import random
@@ -12,7 +13,41 @@ import json
 import os
 from datetime import datetime
 
-# ========== 真实内容库 ==========
+# ========== AI工具库 ==========
+AI_TOOLS = [
+    ("ChatGPT", "https://chat.openai.com", "OpenAI开发的大语言模型，支持对话、写作、编程等多种场景"),
+    ("Claude", "https://claude.ai", "Anthropic推出的AI助手，擅长长文本分析和创意写作"),
+    ("DeepSeek", "https://chat.deepseek.com", "国产开源大模型，性价比高，支持深度推理"),
+    ("Kimi", "https://kimi.moonshot.cn", "月之暗面推出的AI助手，支持超长上下文"),
+    ("文心一言", "https://yiyan.baidu.com", "百度推出的国产大语言模型，中文能力强"),
+    ("通义千问", "https://tongyi.aliyun.com", "阿里云推出的大语言模型，支持多轮对话"),
+    ("讯飞星火", "https://xinghuo.xfyun.cn", "科大讯飞推出的认知大模型"),
+    ("智谱清言", "https://www.zhipuai.cn", "智谱AI推出的对话助手"),
+    ("Midjourney", "https://www.midjourney.com", "AI图像生成工具，支持艺术风格创作"),
+    ("Stable Diffusion", "https://stability.ai", "开源AI图像生成模型，可本地部署"),
+    ("DALL-E", "https://openai.com/dall-e-3", "OpenAI推出的AI绘图工具"),
+    ("Runway", "https://runwayml.com", "AI视频生成和编辑平台"),
+    ("Sora", "https://openai.com/sora", "OpenAI推出的AI视频生成模型"),
+    ("Notion AI", "https://notion.so", "笔记工具的AI助手，支持写作和整理"),
+    ("Copilot", "https://github.com/features/copilot", "GitHub推出的AI编程助手"),
+    ("Cursor", "https://cursor.sh", "AI代码编辑器，集成GPT-4"),
+    ("Gamma", "https://gamma.app", "AI幻灯片生成工具"),
+    ("Beautiful.ai", "https://www.beautiful.ai", "AI驱动的演示文稿设计工具"),
+    ("Canva AI", "https://www.canva.com", "设计平台的AI功能集成"),
+    ("Jasper", "https://www.jasper.ai", "AI营销内容生成工具"),
+    ("Copy.ai", "https://www.copy.ai", "AI文案写作工具"),
+    ("Writesonic", "https://writesonic.com", "AI内容创作平台"),
+    ("Rytr", "https://rytr.me", "AI写作助手，性价比高"),
+    ("Perplexity", "https://www.perplexity.ai", "AI搜索引擎，结合实时信息"),
+    ("Consensus", "https://consensus.app", "AI学术论文搜索引擎"),
+    ("Elicit", "https://elicit.org", "AI研究助手，辅助文献综述"),
+    ("Character.AI", "https://character.ai", "AI角色扮演对话平台"),
+    ("Pi AI", "https://pi.ai", "Inflection推出的个人AI助手"),
+    (" Poe", "https://poe.com", "Quora推出的AI聊天聚合平台"),
+    ("Gemini", "https://gemini.google.com", "Google推出的多模态AI助手"),
+]
+
+# ========== AI资讯库 ==========
 CONTENT_DB = {
     "tech": [
         ("DeepSeek V4规格曝光：1万亿参数+100万上下文", "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/", "国产大模型开启算力军备竞赛新纪元"),
@@ -40,7 +75,7 @@ CONTENT_DB = {
     ],
     "company": [
         ("OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注", "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml", "刷新全球私营科技公司单笔融资纪录"),
-        ("2026年4月AI行业全景扫描：巨头融资创新高", "https://www.msn.cn/zh-cn/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2026%E5%B9%B44%E6%9C%88ai%E8%A1%8C%E4%B8%9A%E5%85%A8%E6%99%AF%E6%89%AB%E6%8F%8F-%E5%B7%A8%E5%A4%B4%E8%9E%8D%E8%B5%84%E5%88%9B%E6%96%B0%E9%AB%98-%E6%A8%A1%E5%9E%8B%E8%BF%AD%E4%BB%A3%E6%8F%90%E9%80%9F-%E6%99%BA%E8%83%BD%E4%BD%93%E6%97%B6%E4%BB%A3%E5%90%AF%E5%B9%95/ar-AA20qJiq", "头部企业持续重塑行业格局"),
+        ("2026年4月AI行业全景扫描：巨头融资创新高", "https://www.msn.cn/zh-cn/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2026%E5%B9%B44%E6%9C%88ai%E8%A1%8C%E4%B8%9A%E5%85%A8%E6%99%AF%E6%89%AB%E6%8F%8F-%E5%B7%82%E5%A4%B4%E8%9E%8D%E8%B5%84%E5%88%9B%E6%96%B0%E9%AB%98-%E6%A8%A1%E5%9E%8B%E8%BF%AD%E4%BB%A3%E6%8F%90%E9%80%9F-%E6%99%BA%E8%83%BD%E4%BD%93%E6%97%B6%E4%BB%A3%E5%90%AF%E5%B9%95/ar-AA20qJiq", "头部企业持续重塑行业格局"),
         ("AI赛道最大金主：英伟达密集出手，超级独角兽诞生", "https://m.36kr.com/p/3716969592927621", "短短两个多月时间内多次投资布局"),
         ("2026年Q1 AI融资疯了：1890亿美元单月纪录", "https://simonaking.com/blog/ai-funding-2026-q1/", "全球创业公司融资总额创历史新高"),
         ("2026年AI巨头全景深度解析：九大公司模型与资本博弈", "https://zhuanlan.zhihu.com/p/2010476815681071043", "OpenAI、Google DeepMind、Anthropic、Meta竞争格局"),
@@ -50,26 +85,16 @@ CONTENT_DB = {
         ("阿里千问登顶全球调用榜：2026年4月AI圈动态", "https://blog.csdn.net/weixin_41908519/article/details/159963116", "从OpenAI刷新纪录到阿里千问登顶"),
         ("英伟达Blackwell GPU供不应求：AI芯片需求爆发", "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml", "算力成为AI发展的关键瓶颈"),
     ],
-    "business": [
-        ("OpenAI年化营收突破40亿美元：AI商业化加速", "https://finance.sina.com.cn/", "SaaS订阅模式验证成功"),
-        ("AI SaaS订阅模式：年ARR增长200%，续费率超90%", "https://www.36kr.com/", "按月/年订阅成为主流商业模式"),
-        ("AI API调用收费：按量计费成主流，毛利率超70%", "https://openai.com/blog", "Token消耗计费模式成熟"),
-        ("AI+知识付费：垂直领域课程月销百万", "https://www.geekpark.net/", "AI使用技巧课程热销"),
-        ("AI定制开发：企业级解决方案报价百万起", "https://www.36kr.com/", "行业定制AI解决方案成蓝海"),
-        ("AI硬件销售：AI PC换机潮将至", "https://finance.sina.com.cn/", "搭载NPU的PC成为新增长点"),
-        ("AI数据服务：高质量数据集售价不菲", "https://tech.sina.com.cn/", "垂直领域数据标注需求旺盛"),
-        ("AI培训服务：企业内训市场爆发成刚需", "https://www.36kr.com/", "AI技能培训市场规模扩大"),
-        ("AI联盟营销：推广分成比例高达50%", "https://www.ifeng.com/", "AI产品分销成为新副业"),
-        ("AI应用商店：插件生态分成模式兴起", "https://www.36kr.com/", "类比App Store的新变现渠道"),
-    ],
 }
 
-def select_unique_items(category, count=10, history_file="history.json"):
-    """选取内容，确保与历史不重复"""
-    items = CONTENT_DB.get(category, [])
-    used_titles = set()
+def get_ai_news(count=10, history_file="history.json"):
+    """获取AI资讯，合并tech/app/company三个板块"""
+    all_news = []
+    for category in ["tech", "app", "company"]:
+        all_news.extend(CONTENT_DB.get(category, []))
     
-    # 读取历史记录
+    # 读取历史，避免重复
+    used_titles = set()
     if os.path.exists(history_file):
         try:
             with open(history_file, 'r', encoding='utf-8') as f:
@@ -81,11 +106,11 @@ def select_unique_items(category, count=10, history_file="history.json"):
         except:
             pass
     
-    # 优先选择未使用的内容
-    unused = [item for item in items if item[0] not in used_titles]
-    used = [item for item in items if item[0] in used_titles]
+    # 去重
+    unused = [item for item in all_news if item[0] not in used_titles]
+    used = [item for item in all_news if item[0] in used_titles]
     
-    # 混合选取：80%新内容 + 20%补充
+    # 优先新内容
     selected = random.sample(unused, min(int(count * 0.8), len(unused)))
     remaining = count - len(selected)
     if remaining > 0 and used:
@@ -93,7 +118,7 @@ def select_unique_items(category, count=10, history_file="history.json"):
     
     return selected[:count]
 
-def save_to_history(section_data, history_file="history.json"):
+def save_to_history(content_data, history_file="history.json"):
     """保存历史记录"""
     today = datetime.now().strftime("%Y-%m-%d")
     
@@ -105,106 +130,61 @@ def save_to_history(section_data, history_file="history.json"):
         except:
             history = []
     
-    # 添加今天的记录
     new_record = {
         "date": today,
         "timestamp": datetime.now().isoformat(),
-        "content": {cat: items for cat, items in section_data}
+        "content": content_data
     }
-    history.insert(0, new_record)  # 最新在前面
-    
-    # 只保留最近30天
-    history = history[:30]
+    history.insert(0, new_record)
+    history = history[:30]  # 保留30天
     
     with open(history_file, 'w', encoding='utf-8') as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
     
     return len(history)
 
-def generate_history_html(history_file="history.json"):
-    """生成往期回顾HTML"""
-    if not os.path.exists(history_file):
-        return ""
-    
-    try:
-        with open(history_file, 'r', encoding='utf-8') as f:
-            history = json.load(f)
-    except:
-        return ""
-    
-    if not history:
-        return ""
-    
-    section_names = {
-        "tech": "[T] AI最新技术",
-        "app": "[A] AI应用场景",
-        "company": "[C] AI公司动态",
-        "business": "[B] AI商业模式"
-    }
-    
-    items_html = ""
-    for day_data in history[:7]:  # 只显示最近7天
-        date = day_data["date"]
-        content = day_data.get("content", {})
-        
-        day_items = ""
-        for section_id, items in content.items():
-            section_name = section_names.get(section_id, section_id)
-            for i, item in enumerate(items[:5], 1):  # 每项最多显示5条
-                title = item[0]
-                url = item[1]
-                day_items += '<div class="history-item"><span class="history-date">' + date + '</span><a href="' + url + '" target="_blank">' + title + '</a></div>'
-        
-        items_html += '<div class="history-day"><h4>' + date + '</h4><div class="history-list">' + day_items + '</div></div>'
-    
-    return '''
-    <section class="section" id="history">
-        <h2><span style="background:rgba(139,92,246,0.15);padding:8px 12px;border-radius:8px;">[*] 往期回顾</span></h2>
-        <p style="color:var(--muted);margin-bottom:20px;">最近7天的AI资讯回顾</p>
-        <div class="history-grid">''' + items_html + '''
-        </div>
-    </section>'''
-
-def generate_html(section_data, history_file="history.json"):
+def generate_html(ai_tools, ai_news, history_file="history.json"):
     today = datetime.now().strftime("%Y-%m-%d %H:%M")
     
-    section_map = {
-        "tech": ("[T]", "AI最新技术", "追踪大模型、架构突破、开源进展"),
-        "app": ("[A]", "AI应用场景", "从实验室到产业深水区"),
-        "company": ("[C]", "AI公司动态", "融资、并购、战略与博弈"),
-        "business": ("[B]", "AI商业模式", "从技术驱动到生态重构"),
-    }
+    # 生成工具卡片
+    tools_html = ""
+    for tool_name, tool_url, tool_desc in ai_tools:
+        tools_html += '<div class="tool-card"><h3><a href="' + tool_url + '" target="_blank">' + tool_name + '</a></h3><p>' + tool_desc + '</p><a href="' + tool_url + '" target="_blank" class="tool-link">访问网站</a></div>'
     
-    colors = {
-        "tech": "rgba(79, 143, 255, 0.15)",
-        "app": "rgba(6, 214, 160, 0.15)",
-        "company": "rgba(255, 107, 53, 0.15)",
-        "business": "rgba(236, 72, 153, 0.15)",
-    }
+    # 生成资讯卡片
+    news_html = ""
+    for i, (news_title, news_url, news_desc) in enumerate(ai_news, 1):
+        news_html += '<div class="card"><span class="card-num">' + str(i) + '</span><div class="card-body"><h3><a href="' + news_url + '" target="_blank">' + news_title + '</a></h3><p>' + news_desc + '</p></div></div>'
     
-    sections_html = ""
-    for sec in section_data:
-        sid = sec["id"]
-        icon, title, desc = section_map[sid]
-        color = colors[sid]
-        
-        cards_html = ""
-        for i, (item_title, url, item_desc) in enumerate(sec["items"], 1):
-            cards_html += '<div class="card"><span class="card-num">' + str(i) + '</span><div class="card-body"><h3><a href="' + url + '" target="_blank">' + item_title + '</a></h3><p>' + item_desc + '</p></div></div>'
-        
-        sections_html += '<section class="section active" id="' + sid + '"><h2><span style="background:' + color + ';padding:8px 12px;border-radius:8px;">' + icon + '</span> ' + title + '</h2><p style="color:var(--muted);margin-bottom:20px;">' + desc + '</p><div class="card-list">' + cards_html + '</div></section>'
+    # 生成往期回顾
+    history_html = ""
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+            
+            if history:
+                history_items = ""
+                for day_data in history[:7]:
+                    date = day_data["date"]
+                    content = day_data.get("content", {})
+                    news_items = content.get("news", [])
+                    for item in news_items[:3]:
+                        history_items += '<div class="history-item"><span class="history-date">' + date + '</span><a href="' + item[1] + '" target="_blank">' + item[0] + '</a></div>'
+                
+                if history_items:
+                    history_html = '''
+        <section class="section" id="history">
+            <h2><span style="background:rgba(139,92,246,0.15);padding:8px 12px;border-radius:8px;">[*]</span> 往期回顾</h2>
+            <p style="color:var(--muted);margin-bottom:20px;">最近7天的AI资讯回顾</p>
+            <div class="history-list">''' + history_items + '''
+            </div>
+        </section>'''
+        except:
+            pass
     
-    # 添加往期回顾
-    sections_html += generate_history_html(history_file)
-    
-    # 替换模板变量
-    html = HTML_TEMPLATE
-    html = html.replace("{{UPDATE_TIME}}", today)
-    html = html.replace("{{SECTIONS}}", sections_html)
-    return html
-
-# ========== HTML模板 ==========
-HTML_TEMPLATE = '''<!DOCTYPE html>
+    # HTML模板
+    html = '''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -235,13 +215,26 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         .nav a { padding: 10px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; font-size: 14px; }
         .nav a:hover { background: var(--card-hover); border-color: var(--blue); }
         .nav a.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border: none; box-shadow: 0 4px 15px rgba(79,143,255,0.3); }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px 20px 60px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px 20px 60px; }
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .section h2 { font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        
+        /* AI工具模块 */
+        .section h2 { font-size: 1.4rem; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
         .section h2 span { font-size: 1.6rem; }
-        .section > p { color: var(--muted); margin-bottom: 24px; margin-top: -12px; font-size: 14px; }
+        .section > p { color: var(--muted); margin-bottom: 24px; font-size: 14px; }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s; }
+        .tool-card:hover { background: var(--card-hover); border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .tool-card h3 { font-size: 16px; margin-bottom: 8px; }
+        .tool-card h3 a { color: var(--text); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+        .tool-card h3 a:hover { color: var(--blue); }
+        .tool-card p { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+        .tool-link { display: inline-block; padding: 6px 14px; background: linear-gradient(135deg, var(--blue), var(--purple)); border-radius: 20px; color: white; text-decoration: none; font-size: 13px; transition: all 0.3s; }
+        .tool-link:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(79,143,255,0.4); }
+        
+        /* AI资讯模块 */
         .card-list { display: flex; flex-direction: column; gap: 12px; }
         .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; display: flex; gap: 16px; align-items: flex-start; transition: all 0.3s; }
         .card:hover { background: var(--card-hover); border-color: var(--blue); transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
@@ -251,17 +244,20 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         .card-body h3 a { color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; display: block; padding: 4px 0; border-radius: 4px; }
         .card-body h3 a:hover { color: var(--blue); background: rgba(79,143,255,0.1); padding-left: 8px; }
         .card-body p { color: var(--muted); font-size: 13px; }
-        .history-grid { display: flex; flex-direction: column; gap: 24px; }
-        .history-day h4 { color: var(--cyan); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        
+        /* 往期回顾 */
         .history-list { display: flex; flex-direction: column; gap: 8px; }
         .history-item { display: flex; gap: 12px; align-items: center; padding: 8px 12px; background: var(--card); border-radius: 8px; font-size: 13px; }
         .history-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
         .history-item a { color: var(--text); text-decoration: none; }
         .history-item a:hover { color: var(--blue); }
+        
+        /* 二维码区域 */
         .qr-section { display: flex; justify-content: center; gap: 40px; padding: 30px; background: var(--card); border-radius: 16px; margin: 40px 0; flex-wrap: wrap; }
         .qr-item { text-align: center; }
         .qr-item img { width: 120px; height: 120px; border-radius: 12px; border: 2px solid var(--border); }
         .qr-item p { margin-top: 10px; color: var(--muted); font-size: 13px; }
+        
         footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--muted); }
         footer a { color: var(--purple); text-decoration: none; }
         footer a:hover { text-decoration: underline; }
@@ -269,6 +265,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
             .hero h1 { font-size: 1.8rem; }
             .nav { gap: 6px; }
             .nav a { padding: 8px 14px; font-size: 13px; }
+            .tool-grid { grid-template-columns: 1fr; }
             .card { padding: 14px 16px; }
             .qr-section { gap: 20px; padding: 20px; }
         }
@@ -281,11 +278,9 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         <div class="update-time">最后更新: <span>{{UPDATE_TIME}}</span> | 每日自动更新</div>
     </section>
     <nav class="nav">
-        <a class="active" data-section="tech">[T] AI技术</a>
-        <a data-section="app">[A] 应用场景</a>
-        <a data-section="company">[C] 公司动态</a>
-        <a data-section="business">[B] 商业模式</a>
-        <a href="/business-mentor/">[X] 商道导师</a>
+        <a class="active" data-section="tools">[1] AI工具</a>
+        <a data-section="news">[2] AI资讯</a>
+        <a href="/business-mentor/">[3] AI商业</a>
         <a data-section="history">[*] 往期回顾</a>
     </nav>
     <div class="qr-section">
@@ -299,7 +294,17 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         </div>
     </div>
     <main class="container">
-        {{SECTIONS}}
+        <section class="section active" id="tools">
+            <h2><span style="background:rgba(79, 143, 255, 0.15);padding:8px 12px;border-radius:8px;">[1]</span> AI工具集</h2>
+            <p>收录主流AI工具，名称、网址、简介一目了然</p>
+            <div class="tool-grid">{{TOOLS}}</div>
+        </section>
+        <section class="section" id="news">
+            <h2><span style="background:rgba(6, 214, 160, 0.15);padding:8px 12px;border-radius:8px;">[2]</span> AI资讯</h2>
+            <p>每日精选AI技术动态、应用场景、公司消息</p>
+            <div class="card-list">{{NEWS}}</div>
+        </section>
+        {{HISTORY}}
     </main>
     <footer>
         <p>内容来源于公开网络，仅供学习参考 | <a href="https://github.com/hudongcai/hudongcai.github.io" target="_blank">GitHub</a></p>
@@ -320,33 +325,40 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
     </script>
 </body>
 </html>'''
+    
+    # 替换变量
+    html = html.replace("{{UPDATE_TIME}}", today)
+    html = html.replace("{{TOOLS}}", tools_html)
+    html = html.replace("{{NEWS}}", news_html)
+    html = html.replace("{{HISTORY}}", history_html)
+    
+    return html
 
 def main():
-    print("[START] AI News Website Update V2.0")
+    print("[START] AI News Website Update V3.0")
     
     history_file = "history.json"
-    section_configs = ["tech", "app", "company", "business"]
-    section_data = []
     
-    for section_id in section_configs:
-        items = select_unique_items(section_id, 10, history_file)
-        section_data.append({"id": section_id, "items": items})
-        print("[OK] " + section_id + ": " + str(len(items)) + " items")
+    # 获取AI工具（固定展示）
+    ai_tools = AI_TOOLS[:30]  # 展示30个工具
+    
+    # 获取AI资讯
+    ai_news = get_ai_news(count=10, history_file=history_file)
     
     # 保存历史
-    history_count = save_to_history(section_data, history_file)
+    content_data = {"news": ai_news}
+    history_count = save_to_history(content_data, history_file)
+    print("[OK] AI Tools: " + str(len(ai_tools)) + " items")
+    print("[OK] AI News: " + str(len(ai_news)) + " items")
     print("[OK] History saved: " + str(history_count) + " days")
     
     # 生成HTML
-    html_content = generate_html(section_data, history_file)
+    html_content = generate_html(ai_tools, ai_news, history_file)
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
     print("[DONE] index.html generated (" + str(len(html_content)) + " bytes)")
-    print("[INFO] Sections: " + str(len(section_data)) + ", Items per section: 10")
-    
-    return 0
 
 if __name__ == "__main__":
     exit(main())
