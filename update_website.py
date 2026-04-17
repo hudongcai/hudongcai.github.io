@@ -631,10 +631,10 @@ def main():
     print("=" * 60)
     
     section_configs = [
-        ("tech", "🔬", "最新AI技术"),
-        ("app", "💡", "最新AI应用场景"),
-        ("company", "🏢", "最新AI公司消息"),
-        ("business", "💰", "最新AI商业盈利模式"),
+        ("tech", "T", "最新AI技术"),
+        ("app", "A", "最新AI应用场景"),
+        ("company", "C", "最新AI公司消息"),
+        ("business", "B", "最新AI商业盈利模式"),
     ]
     
     section_data = []
