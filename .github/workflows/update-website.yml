@@ -22,7 +22,7 @@ jobs:
           python-version: '3.11'
 
       - name: Run update script
-        run: python update_website.py
+        run: PYTHONIOENCODING=utf-8 python update_website.py
 
       - name: Commit changes
         run: |
