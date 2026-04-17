@@ -248,8 +248,8 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         .card-num { width: 28px; height: 28px; background: linear-gradient(135deg, var(--blue), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
         .card-body { flex: 1; min-width: 0; }
         .card-body h3 { font-size: 15px; margin-bottom: 6px; }
-        .card-body h3 a { color: var(--text); text-decoration: none; transition: color 0.3s; }
-        .card-body h3 a:hover { color: var(--blue); }
+        .card-body h3 a { color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; display: block; padding: 4px 0; border-radius: 4px; }
+        .card-body h3 a:hover { color: var(--blue); background: rgba(79,143,255,0.1); padding-left: 8px; }
         .card-body p { color: var(--muted); font-size: 13px; }
         .history-grid { display: flex; flex-direction: column; gap: 24px; }
         .history-day h4 { color: var(--cyan); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-size: 14px; }
