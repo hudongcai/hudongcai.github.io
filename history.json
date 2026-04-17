@@ -1,6 +1,64 @@
 [
   {
     "date": "2026-04-17",
+    "timestamp": "2026-04-17T14:29:18.328087",
+    "content": {
+      "news": [
+        [
+          "OpenAI再融资1220亿美元：成全球估值最高AI创企",
+          "https://www.jiemian.com/article/14193337.html",
+          "Anthropic正推进600亿美元融资计划"
+        ],
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ],
+        [
+          "OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "刷新全球私营科技公司单笔融资纪录"
+        ],
+        [
+          "AI赛道最大金主：英伟达密集出手，超级独角兽诞生",
+          "https://m.36kr.com/p/3716969592927621",
+          "短短两个多月时间内多次投资布局"
+        ],
+        [
+          "英伟达Blackwell GPU供不应求：AI芯片需求爆发",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "算力成为AI发展的关键瓶颈"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ],
+        [
+          "AI行业应用：金融、医疗、教育、制造业落地案例",
+          "https://jishuzhan.net/article/1963925204906328065",
+          "四大核心行业的具体应用深度解析"
+        ],
+        [
+          "2026国产AI突围战：DeepSeek、通义千问、豆包",
+          "https://www.pconline.com.cn/ai/article/1549967.html",
+          "国产AI模型凭借本土化优势强势突围"
+        ],
+        [
+          "AI+行业落地指南：制造业、医疗、零售案例解析",
+          "https://cloud.tencent.com/developer/article/2624482",
+          "避免认知两极化、应用碎片化等常见误区"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100 - 硅谷动力",
+          "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml",
+          "唯一评判标准交给实际应用效果"
+        ]
+      ]
+    }
+  },
+  {
+    "date": "2026-04-17",
     "timestamp": "2026-04-17T14:22:37.317996",
     "content": {
       "news": [
