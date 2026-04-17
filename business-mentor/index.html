@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商道导师 - 商业认知与赚钱实践</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2d5a87;
+            --accent: #d69e2e;
+            --success: #38a169;
+            --bg-light: #f7fafc;
+            --text-dark: #2d3748;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a365d 0%, #2d5a87 50%, #1a365d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, var(--primary) 0%, #0f2744 100%);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(4px);
+        }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .stats-card {
+            margin-top: auto;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .stats-card h3 {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-light);
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* 消息样式 */
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.mentor {
+            align-self: flex-start;
+            max-width: 85%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .mentor .avatar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .user .avatar {
+            background: linear-gradient(135deg, var(--accent), #f6e05e);
+        }
+
+        .message-content {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .user .message-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .message-content h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .user .message-content h3 {
+            color: var(--accent);
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .message-content li {
+            margin-bottom: 8px;
+        }
+
+        .message-content code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        .message-content blockquote {
+            background: linear-gradient(135deg, rgba(26,54,93,0.08), rgba(214,158,46,0.05));
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .message-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .message-content th, .message-content td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .message-content th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .message-content tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(26,54,93,0.08), rgba(214,158,46,0.05));
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .highlight-box.success {
+            background: linear-gradient(135deg, rgba(56,161,105,0.1), rgba(56,161,105,0.05));
+            border: 1px solid var(--success);
+        }
+
+        .highlight-box .label {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .action-box .label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .thought-question {
+            background: linear-gradient(135deg, #6b46c1, #805ad5);
+            color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .thought-question .label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        /* 输入区 */
+        .input-area {
+            background: white;
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .quick-questions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .quick-btn {
+            background: var(--bg-light);
+            border: 1px solid #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-dark);
+        }
+
+        .quick-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #message-input:focus {
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        /* 互动面板 */
+        .panel {
+            display: none;
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .panel-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-card p {
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* 每日一题 */
+        .daily-challenge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .daily-challenge .badge {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .daily-challenge h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .daily-challenge p {
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .daily-challenge .hint {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        /* 认知卡片 */
+        .cognition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .cognition-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .cognition-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .cognition-card .icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .cognition-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .cognition-card p {
+            color: var(--text-dark);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cognition-card .tag {
+            display: inline-block;
+            background: var(--bg-light);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        /* 问答区 */
+        .qa-item {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .qa-item .question {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .qa-item .answer {
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* 苏格拉底追问 */
+        .socratic-card {
+            background: linear-gradient(135deg, #553c9a, #6b46c1);
+            color: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .socratic-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .socratic-question {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .reflection-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 12px;
+        }
+
+        .reflection-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .reflection-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* 历史记录 */
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            transform: translateX(4px);
+        }
+
+        .history-item .topic {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .history-item .date {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .history-item .preview {
+            font-size: 13px;
+            color: var(--text-dark);
+            margin-top: 4px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .back-btn {
+            background: var(--bg-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 16px;
+            }
+            .sidebar .stats-card {
+                display: none;
+            }
+            .nav-btn span {
+                display: none;
+            }
+        }
+
+        /* 思考题标签 */
+        .tag-thought {
+            display: inline-block;
+            background: linear-gradient(135deg, #6b46c1, #805ad5);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 6px;
+        }
+
+        .tag-action {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success), #48bb78);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 6px;
+        }
+
+        .tag-logic {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #ecc94b);
+            color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🎯</div>
+                <h1>商道导师</h1>
+                <p>商业认知 · 赚钱实践</p>
+                <a href="https://www.hudc0117.fun" style="display:inline-block; margin-top:8px; font-size:11px; color:var(--accent); text-decoration:none;">← 返回AI小栈</a>
+            </div>
+
+            <button class="nav-btn active" onclick="switchView('chat')">
+                💬 智能对话
+            </button>
+            <button class="nav-btn" onclick="switchView('daily')">
+                📅 每日一题
+            </button>
+            <button class="nav-btn" onclick="switchView('cognition')">
+                🧠 认知训练
+            </button>
+            <button class="nav-btn" onclick="switchView('socratic')">
+                🤔 苏格拉底追问
+            </button>
+            <button class="nav-btn" onclick="switchView('history')">
+                📚 学习记录
+            </button>
+
+            <div class="stats-card">
+                <h3>📊 学习进度</h3>
+                <div class="stat-item">
+                    <span>认知点数</span>
+                    <span class="stat-value" id="cognition-points">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>思考题完成</span>
+                    <span class="stat-value" id="challenges-done">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>学习天数</span>
+                    <span class="stat-value" id="learning-days">1</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+                <div style="margin-top: 8px;">
+                    <span class="level-badge" id="level-badge">
+                        ⭐ 初窥门径
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 对话面板 -->
+            <div class="panel active" id="panel-chat">
+                <div class="chat-area" id="chat-area">
+                    <!-- 消息将在这里显示 -->
+                </div>
+                <div class="input-area">
+                    <div class="quick-questions" id="quick-questions">
+                        <button class="quick-btn" onclick="askQuick('如何找到创业方向？')">如何找到创业方向？</button>
+                        <button class="quick-btn" onclick="askQuick('赚钱的本质是什么？')">赚钱的本质是什么？</button>
+                        <button class="quick-btn" onclick="askQuick('怎样定价更好？')">怎样定价更好？</button>
+                        <button class="quick-btn" onclick="askQuick('如何低成本获客？')">如何低成本获客？</button>
+                    </div>
+                    <input type="text" id="message-input" placeholder="输入你的商业问题..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">发送</button>
+                </div>
+            </div>
+
+            <!-- 每日一题面板 -->
+            <div class="panel" id="panel-daily">
+                <div class="panel-header">
+                    <h2>📅 每日一题</h2>
+                    <button class="back-btn" onclick="switchView('chat')">← 返回对话</button>
+                </div>
+                
+                <div class="daily-challenge" id="daily-challenge">
+                    <span class="badge">今日挑战</span>
+                    <h3 id="challenge-title">加载中...</h3>
+                    <p id="challenge-desc">...</p>
+                    <button class="back-btn" onclick="answerChallenge()" style="background: var(--accent); color: var(--primary);">
+                        💡 开始思考
+                    </button>
+                    <div class="hint" id="challenge-hint" style="display:none;">
+                        <strong>💡 小提示：</strong>
+                        <span id="hint-text"></span>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary); margin: 20px 0 16px;">📝 历史挑战</h3>
+                <div id="challenge-history"></div>
+            </div>
+
+            <!-- 认知训练面板 -->
+            <div class="panel" id="panel-cognition">
+                <div class="panel-header">
+                    <h2>🧠 认知训练</h2>
+                    <button class="back-btn" onclick="switchView('chat')">← 返回对话</button>
+                </div>
+
+                <div class="cognition-grid">
+                    <div class="cognition-card" onclick="askQuick('解释一下供需关系')">
+                        <div class="icon">📈</div>
+                        <h4>供需关系</h4>
+                        <p>理解价格和机会的本质来源</p>
+                        <span class="tag">底层逻辑</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('什么是边际成本？')">
+                        <div class="icon">📉</div>
+                        <h4>边际成本</h4>
+                        <p>为什么有些生意越做越轻松</p>
+                        <span class="tag">成本思维</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('复利思维是什么？')">
+                        <div class="icon">🔄</div>
+                        <h4>复利思维</h4>
+                        <p>如何让努力产生累积效应</p>
+                        <span class="tag">财富思维</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('价值交换的原理')">
+                        <div class="icon">🤝</div>
+                        <h4>价值交换</h4>
+                        <p>商业本质的终极解读</p>
+                        <span class="tag">本质思维</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('第一性原理是什么？')">
+                        <div class="icon">🔮</div>
+                        <h4>第一性原理</h4>
+                        <p>从根本出发思考问题</p>
+                        <span class="tag">思维方法</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('概率思维在商业中的应用')">
+                        <div class="icon">🎲</div>
+                        <h4>概率思维</h4>
+                        <p>成功不是必然，而是概率</p>
+                        <span class="tag">决策思维</span>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px;">🧩 商业框架</h3>
+                <div class="cognition-grid">
+                    <div class="cognition-card" onclick="askQuick('商业模式画布是什么？')">
+                        <div class="icon">🗺️</div>
+                        <h4>商业模式画布</h4>
+                        <p>系统描述商业的9大要素</p>
+                        <span class="tag">框架工具</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('获客漏斗是什么？')">
+                        <div class="icon">🎯</div>
+                        <h4>获客漏斗</h4>
+                        <p>从认知到复购的全流程</p>
+                        <span class="tag">增长框架</span>
+                    </div>
+                    <div class="cognition-card" onclick="askQuick('SWOT分析怎么做？')">
+                        <div class="icon">📊</div>
+                        <h4>SWOT分析</h4>
+                        <p>战略分析的经典工具</p>
+                        <span class="tag">分析工具</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 苏格拉底追问面板 -->
+            <div class="panel" id="panel-socratic">
+                <div class="panel-header">
+                    <h2>🤔 苏格拉底追问</h2>
+                    <button class="back-btn" onclick="switchView('chat')">← 返回对话</button>
+                </div>
+
+                <div class="socratic-card">
+                    <h3>🎭 今日追问</h3>
+                    <div class="socratic-question" id="socratic-question">
+                        点击下方按钮，获取一个深度思考问题
+                    </div>
+                    <button class="back-btn" onclick="getNewSocraticQuestion()" style="background: white; color: #6b46c1;">
+                        🔄 换一个问题
+                    </button>
+                </div>
+
+                <div class="panel-card">
+                    <h3>✍️ 你的思考</h3>
+                    <textarea class="reflection-input" id="reflection-input" placeholder="在这里写下你的思考... 不要急于给出答案，先让思维流动起来。"></textarea>
+                    <button class="send-btn" onclick="submitReflection()" style="background: #6b46c1;">
+                        提交思考
+                    </button>
+                </div>
+
+                <div class="panel-card">
+                    <h3>📖 苏格拉底追问法</h3>
+                    <p>这是一种通过连续追问来深化思考的方法：</p>
+                    <ul style="margin: 12px 0; padding-left: 20px;">
+                        <li><strong>澄清问题</strong>：你说的"赚钱"具体是什么意思？</li>
+                        <li><strong>假设追问</strong>：你这么说的前提是什么？</li>
+                        <li><strong>证据追溯</strong>：有什么证据支持这个观点？</li>
+                        <li><strong>观点探源</strong>：这个观点的来源是什么？</li>
+                        <li><strong>反向思考</strong>：如果相反会怎样？</li>
+                        <li><strong>后果推演</strong>：这样做的后果是什么？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 历史记录面板 -->
+            <div class="panel" id="panel-history">
+                <div class="panel-header">
+                    <h2>📚 学习记录</h2>
+                    <button class="back-btn" onclick="switchView('chat')">← 返回对话</button>
+                </div>
+
+                <div class="panel-card">
+                    <h3>🏆 学习成就</h3>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px;">🧠</div>
+                            <div style="font-size: 13px; color: var(--text-dark);">认知点数</div>
+                            <div style="font-size: 20px; font-weight: bold; color: var(--primary);" id="stat-cognition">0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px;">💬</div>
+                            <div style="font-size: 13px; color: var(--text-dark);">对话轮次</div>
+                            <div style="font-size: 20px; font-weight: bold; color: var(--primary);" id="stat-conversations">0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px;">✨</div>
+                            <div style="font-size: 13px; color: var(--text-dark);">深度思考</div>
+                            <div style="font-size: 20px; font-weight: bold; color: var(--primary);" id="stat-reflections">0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px;">📅</div>
+                            <div style="font-size: 13px; color: var(--text-dark);">连续天数</div>
+                            <div style="font-size: 20px; font-weight: bold; color: var(--primary);" id="stat-days">1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--primary); margin: 20px 0 16px;">💡 积累的洞察</h3>
+                <div id="insights-list">
+                    <div class="qa-item">
+                        <div class="question">这里会显示你积累的商业洞察...</div>
+                        <div class="answer">每次对话后，我会提取核心洞察保存在这里</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 状态管理 ====================
+        let state = {
+            conversationCount: 0,
+            cognitionPoints: 0,
+            reflectionsCount: 0,
+            learningDays: 1,
+            insights: [],
+            dailyChallengeCompleted: false,
+            currentChallenge: null
+        };
+
+        // 加载状态
+        function loadState() {
+            const saved = localStorage.getItem('shangdao_state');
+            if (saved) {
+                state = JSON.parse(saved);
+            }
+            updateStats();
+            renderInsights();
+        }
+
+        // 保存状态
+        function saveState() {
+            localStorage.setItem('shangdao_state', JSON.stringify(state));
+        }
+
+        // 更新统计
+        function updateStats() {
+            document.getElementById('cognition-points').textContent = state.cognitionPoints;
+            document.getElementById('challenges-done').textContent = state.reflectionsCount;
+            document.getElementById('learning-days').textContent = state.learningDays;
+            document.getElementById('progress-fill').style.width = Math.min(state.cognitionPoints * 2, 100) + '%';
+            
+            // 更新等级
+            const badge = document.getElementById('level-badge');
+            if (state.cognitionPoints >= 500) {
+                badge.innerHTML = '👑 商业大师';
+            } else if (state.cognitionPoints >= 300) {
+                badge.innerHTML = '🌟 资深操盘手';
+            } else if (state.cognitionPoints >= 100) {
+                badge.innerHTML = '⭐ 商业老手';
+            } else if (state.cognitionPoints >= 50) {
+                badge.innerHTML = '📈 入门进阶';
+            } else {
+                badge.innerHTML = '⭐ 初窥门径';
+            }
+
+            // 更新历史面板
+            document.getElementById('stat-cognition').textContent = state.cognitionPoints;
+            document.getElementById('stat-conversations').textContent = state.conversationCount;
+            document.getElementById('stat-reflections').textContent = state.reflectionsCount;
+            document.getElementById('stat-days').textContent = state.learningDays;
+        }
+
+        // 渲染洞察
+        function renderInsights() {
+            const container = document.getElementById('insights-list');
+            if (state.insights.length === 0) {
+                container.innerHTML = `
+                    <div class="qa-item">
+                        <div class="question">这里会显示你积累的商业洞察...</div>
+                        <div class="answer">每次对话后，我会提取核心洞察保存在这里。继续和我交流吧！</div>
+                    </div>
+                `;
+                return;
+            }
+            container.innerHTML = state.insights.map(insight => `
+                <div class="qa-item">
+                    <div class="question">${insight.topic}</div>
+                    <div class="answer">${insight.content}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== 视图切换 ====================
+        function switchView(view) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('panel-' + view).classList.add('active');
+            event.target.closest('.nav-btn').classList.add('active');
+        }
+
+        // ==================== 每日一题系统 ====================
+        const dailyChallenges = [
+            {
+                title: '🎯 你的第一桶金会从哪里来？',
+                desc: '思考：你认为大多数成功创业者的第一笔收入是怎么来的？是一次偶然，还是深思熟虑的结果？',
+                hint: '提示：第一桶金往往来自解决一个具体的、小而真实的问题，而不是宏大的商业计划。'
+            },
+            {
+                title: '💰 如果你明天失业...',
+                desc: '思考：如果突然失去现有收入，你有什么方法在30天内赚到钱？列出3种可能的方式。',
+                hint: '提示：这个问题测试的是你对"赚钱能力"和"赚钱机会"的区分。前者是你能做的，后者是市场需要的。'
+            },
+            {
+                title: '🔍 观察：你身边的付费行为',
+                desc: '思考：回想一下你最近的一次付费行为（买课程、点外卖、打车等）。你为什么愿意付钱？是什么打动了你？',
+                hint: '提示：每次付费背后都是一个"价值感知"。理解这个，能帮你更好地卖东西。'
+            },
+            {
+                title: '📊 商业画布：画你现在的状态',
+                desc: '思考：如果把你目前的收入来源画成一个商业模式，你能画出来吗？你的客户是谁？你提供什么价值？',
+                hint: '提示：商业模式画布的9个要素是：客户细分、价值主张、渠道、客户关系、收入来源、核心资源、关键业务、重要合作、成本结构。'
+            },
+            {
+                title: '🤔 "便宜"真的能打败竞争对手吗？',
+                desc: '思考：用一个你熟悉的行业的例子，分析低价策略的利弊。什么时候该打价格战，什么时候不该？',
+                hint: '提示：价格战只在你能承受亏损、对手也承受不了、且你能撑到最后时才有效。否则，这是一场必输的游戏。'
+            },
+            {
+                title: '🌱 你的"睡后收入"是什么？',
+                desc: '思考：有没有一种收入，是你在睡觉的时候也在赚钱的？如果没有，你打算怎么建立？',
+                hint: '提示："睡后收入"的特点：一次性付出，持续收获。如：版权、房租、投资、订阅服务。'
+            },
+            {
+                title: '🔄 复利在哪里？',
+                desc: '思考：在你的工作或生活中，哪些行为具有复利效应？哪些是在消耗你的时间和精力？',
+                hint: '提示：复利行为：学习、锻炼、建立关系、积累技能、品牌建设。反之：重复性无成长的工作、无意义的社交。'
+            },
+            {
+                title: '👥 如果给你100个用户...',
+                desc: '思考：如果明天给你100个精准目标用户（他们都有这个需求），你能让他们中的多少人为你付费？为什么是这些？',
+                hint: '提示：这个问题测试的是你对"流量"和"转化"的理解。100个精准用户 > 10000个泛流量。'
+            }
+        ];
+
+        function loadDailyChallenge() {
+            const today = new Date().getDate();
+            const challenge = dailyChallenges[today % dailyChallenges.length];
+            document.getElementById('challenge-title').textContent = challenge.title;
+            document.getElementById('challenge-desc').textContent = challenge.desc;
+            state.currentChallenge = challenge;
+        }
+
+        function answerChallenge() {
+            const hint = document.getElementById('challenge-hint');
+            if (hint.style.display === 'none') {
+                hint.style.display = 'block';
+                document.getElementById('hint-text').textContent = state.currentChallenge.hint;
+            } else {
+                // 跳转到对话并发送挑战内容
+                document.querySelector('[data-view="chat"]').click();
+                const question = `我今天的思考题是：${state.currentChallenge.title}\n\n${state.currentChallenge.desc}`;
+                addMessage('user', question);
+                const response = generateResponse(question, true);
+                addMessage('mentor', response);
+                state.reflectionsCount++;
+                state.cognitionPoints += 15;
+                saveState();
+                updateStats();
+            }
+        }
+
+        // ==================== 苏格拉底追问 ====================
+        const socraticQuestions = [
+            {
+                q: '你说"要赚钱"，但"赚钱"对你来说究竟意味着什么？是更多的自由、证明自己的能力、还是别的什么？',
+                follow: '如果你赚到了那个数字，但你仍然不快乐呢？赚钱和快乐之间的关系是什么？'
+            },
+            {
+                q: '你认为"好生意"和"坏生意"的区别是什么？这种判断标准是谁教给你的？它一定是对的吗？',
+                follow: '如果你用完全相反的标准来评判，会有什么不同？'
+            },
+            {
+                q: '你看到别人成功了，你真的很想复制他的模式。但你有没有想过：他成功的真正原因是什么？是那个方法，还是他的背景、时机、资源？',
+                follow: '如果把你放到他的位置，用你的资源做他的事，你会怎么做？'
+            },
+            {
+                q: '你说要创业，但创业意味着什么？自己当老板？更高的收入？不被人管？这些是你真正想要的吗？',
+                follow: '如果不创业，你现在的状态能不能通过其他方式达到你想要的目标？'
+            },
+            {
+                q: '你认为客户"需要"你的产品，但你有没有验证过？他们的"需要"和"想要"是一样的吗？他们愿意为此付多少钱？',
+                follow: '如果客户不愿意付钱，你还会认为这是一个"需求"吗？'
+            },
+            {
+                q: '你在等一个"好时机"再开始。但什么是好时机？如果时机永远不会来，你还会做这件事吗？',
+                follow: '如果从今天开始，你只能做一件事，你会做什么？为什么要等？'
+            },
+            {
+                q: '你说你害怕失败。但如果你现在不行动，5年后的你会后悔吗？那时候的失败和现在的失败，哪个更可怕？',
+                follow: '最坏的情况真的会发生吗？发生了你能承受吗？'
+            },
+            {
+                q: '你现在的商业模式依赖的是什么？你的核心竞争力是什么？如果竞争对手知道你这个秘密，他们会怎么做？',
+                follow: '你的"护城河"是真正的壁垒，还是只是暂时的优势？'
+            }
+        ];
+
+        function getNewSocraticQuestion() {
+            const randomIndex = Math.floor(Math.random() * socraticQuestions.length);
+            const q = socraticQuestions[randomIndex];
+            document.getElementById('socratic-question').innerHTML = `
+                ${q.q}
+                <div style="margin-top: 12px; font-size: 14px; opacity: 0.8;">
+                    💭 ${q.follow}
+                </div>
+            `;
+            document.getElementById('reflection-input').focus();
+        }
+
+        function submitReflection() {
+            const text = document.getElementById('reflection-input').value.trim();
+            if (!text) {
+                alert('请先写下你的思考');
+                return;
+            }
+            
+            state.reflectionsCount++;
+            state.cognitionPoints += 10;
+            saveState();
+            updateStats();
+            
+            addMessage('user', `【深度思考】${text}`);
+            
+            const response = `📝 你的思考已记录！
+
+<span class="tag-thought">深度思考 +10认知点</span>
+
+**关于你的思考：**
+
+"${text}"
+
+---
+
+${generateFollowUp(text)}`;
+
+            addMessage('mentor', response);
+            document.getElementById('reflection-input').value = '';
+            
+            // 切换回对话
+            switchView('chat');
+        }
+
+        function generateFollowUp(text) {
+            if (text.length < 20) {
+                return `你的思考很有价值。能再深入一点吗？试着追问自己：<strong>为什么</strong>你会这么想？`;
+            }
+            
+            const followUps = [
+                `很好！基于你的思考，我想追问：<strong>如果把这个想法反过来，会怎样？</strong>`,
+                `你的思考涉及到"价值观"层面的东西。真正的问题是：<strong>你能坚持这个价值观多久？</strong>`,
+                `很有深度的思考！这让我想到另一个问题：<strong>你的用户会同意你的观点吗？</strong>`,
+                `非常好！在商业世界里，这种思考习惯会让你比大多数人更接近真相。<strong>你打算怎么验证这个想法？</strong>`
+            ];
+            
+            return followUps[Math.floor(Math.random() * followUps.length)];
+        }
+
+        // ==================== 快速提问 ====================
+        function askQuick(question) {
+            document.getElementById('message-input').value = question;
+            switchView('chat');
+            sendMessage();
+        }
+
+        // ==================== 核心对话引擎 ====================
+        function generateResponse(userMessage, isChallenge = false) {
+            const lowerMsg = userMessage.toLowerCase();
+            
+            // 底层逻辑回复库
+            const responses = {
+                '创业': {
+                    title: '🎯 创业的第一性原理',
+                    content: `创业的本质不是"想做什么"，而是<strong>"能解决什么人的什么问题"</strong>。
+
+记住这个公式：
+<blockquote>创业成功 = 找到真问题 × 提出好方案 × 找到愿意付钱的人</blockquote>
+
+**为什么99%的创业失败？** 因为他们从"想法"开始，而不是从"问题"开始。
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 列出你身边3个朋友的真实痛点（不超过20字描述每个）
+
+---
+                    
+${getActionPrompt('创业方向')}
+`,
+                    points: 10
+                },
+                '赚钱': {
+                    title: '💰 赚钱的底层逻辑',
+                    content: `赚钱的本质只有一个公式：
+
+<blockquote>赚钱 = 价值创造 × 价值传递 × 价值捕获</blockquote>
+
+**拆解：**
+- <strong>价值创造</strong>：你解决了什么真实问题？
+- <strong>价值传递</strong>：你怎么让目标客户知道你？
+- <strong>价值捕获</strong>：你怎么从价值中分一杯羹？
+
+---
+
+**赚钱的3个层次：**
+| 层次 | 方式 | 特点 |
+|------|------|------|
+| 🥉 第一层 | 卖时间 | 打工，线性收入 |
+| 🥈 第二层 | 卖技能 | 自由职业，能力变现 |
+| 🥇 第三层 | 卖系统 | 创业/投资，睡后收入 |
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 评估你目前处于哪个层次，写下下一步升级的具体行动
+
+---
+                    
+${getActionPrompt('赚钱')}
+`,
+                    points: 10
+                },
+                '定价': {
+                    title: '💵 定价的底层逻辑',
+                    content: `定价是商业中最反直觉的技能。
+
+<strong>价格不是由成本决定的，而是由客户感知价值决定的。</strong>
+
+**定价策略选择：**
+| 策略 | 何时用 | 怎么定 |
+|------|--------|--------|
+| 渗透定价 | 抢占市场 | 低于市场价30%+ |
+| 价值定价 | 方案独特 | 客户收益的1/10~1/5 |
+| 撇脂定价 | 技术领先 | 客户能接受的最高价 |
+
+**核心心法：**
+<blockquote>不要卖便宜，要卖"值"。客户买的不是便宜，是"占了便宜的感觉"和"确定能解决问题"。</blockquote>
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 找到你产品/服务的3个竞品，记录它们的价格，然后问：为什么客户要选你？
+
+---
+                    
+${getActionPrompt('定价')}
+`,
+                    points: 10
+                },
+                '获客': {
+                    title: '📈 获客的底层逻辑',
+                    content: `获客公式：
+<blockquote>获客 = 流量 × 转化率</blockquote>
+
+很多人只盯着流量，结果转化率低，白白浪费。
+
+**4种获客策略：**
+1. <strong>内容获客</strong>（最推荐）：文章/视频/直播/社群
+2. <strong>投放获客</strong>（最快）：信息流广告
+3. <strong>合作获客</strong>（杠杆）：找相同客户群的账号互推
+4. <strong>转介绍</strong>（复利）：这是最好的方式
+
+**转化率优化4步：**
+- 认知：吸引注意（标题/封面）
+- 兴趣：建立信任（案例/证明）
+- 欲望：激发渴望（痛点共鸣）
+- 行动：降低门槛（限时/零风险）
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 写下你目标客户最常出现在哪里（线上3个地方、线下2个地方）
+
+---
+                    
+${getActionPrompt('获客')}
+`,
+                    points: 10
+                },
+                '底层': {
+                    title: '🔮 商业底层逻辑体系',
+                    content: `理解底层逻辑，才是真正的竞争优势。
+
+**核心公式：**
+<blockquote>商业价值 = (客户收益 - 客户成本) × 可复制性</blockquote>
+
+**4大底层规律：**
+
+1. <strong>供需决定价格</strong>
+   - 供不应求 = 定价权在你手里
+   - 供过于求 = 你要打价格战
+
+2. <strong>边际成本决定规模</strong>
+   - 边际成本低（软件/内容）= 可快速规模化
+   - 边际成本高（人力服务）= 规模受限但更稳定
+
+3. <strong>信任决定转化</strong>
+   - 信任是商业的货币
+   - 没有信任，再好的产品也卖不出去
+
+4. <strong>复利决定财富</strong>
+   - 追求可累积的效果
+   - 今天的客户能带来明天的客户
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 选一个你关心的商业问题，尝试用供需、边际成本、信任、复利这4个视角分析
+
+---
+                    
+${getActionPrompt('底层逻辑')}
+`,
+                    points: 15
+                },
+                '实践': {
+                    title: '⚡ 实践的底层框架',
+                    content: `知道和做到之间，隔着十万八千里。
+
+**从最小行动开始：**
+<blockquote>最小闭环 = 找到1个客户 → 提供服务 → 收到钱</blockquote>
+
+只需要这3步，你就已经在赚钱了。
+
+**快速迭代循环：**
+<blockquote>行动 → 得到反馈 → 调整 → 再次行动</blockquote>
+
+**行动优先级矩阵：**
+| | 简单 | 复杂 |
+|---|---|---|
+| 高价值 | ✅ 立刻做 | 📅 规划后做 |
+| 低价值 | 🔄 批量做 | ❌ 放弃 |
+
+**克服拖延技巧：**
+- <strong>2分钟法则</strong>：2分钟内能做的事，立刻做
+- <strong>承诺机制</strong>：公开承诺你的行动计划
+- <strong>降低门槛</strong>：分解到不可能失败的小步骤
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 列出你一直想做但没做的3件事，每件事用一句话描述"第一步要做什么"
+
+---
+                    
+${getActionPrompt('行动')}
+`,
+                    points: 10
+                },
+                '供需': {
+                    title: '📈 供需关系的商业解读',
+                    content: `供需是商业的底层规律之一。
+
+<blockquote>一切价格和机会，都源于供需失衡。</blockquote>
+
+**找钱的方向 = 找供需失衡的地方**
+
+**供给端失衡（你能提供别人提供不了的）：**
+- 技术壁垒
+- 独家资源
+- 品牌溢价
+- 地理优势
+
+**需求端失衡（需求在快速增长）：**
+- 新兴市场
+- 消费升级
+- 政策红利
+- 技术变革
+
+**如何利用：**
+1. 如果你能创造供给稀缺 → 定价权在你
+2. 如果你能捕捉需求爆发 → 快速增长机会
+3. 如果你能同时做到 → 独角兽潜质
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 分析你所在行业，当前是供过于求还是供不应求？机会在哪里？
+
+---
+                    
+${getActionPrompt('供需关系')}
+`,
+                    points: 10
+                },
+                '边际成本': {
+                    title: '📉 边际成本的商业思维',
+                    content: `边际成本 = 每增加一个客户需要付出的额外成本。
+
+<blockquote>边际成本越低，越容易赚大钱。</blockquote>
+
+**对比：**
+| 行业 | 边际成本 | 特点 |
+|------|----------|------|
+| 软件/内容 | 极低 | 一份投入，无限销售 |
+| 教育/咨询 | 中等 | 需要投入时间 |
+| 餐饮/制造 | 较高 | 每次服务都需要成本 |
+
+**商业启示：**
+
+1. <strong>优先选择边际成本低的模式</strong>
+   - 同样的努力，不同的回报
+
+2. <strong>思考如何降低边际成本</strong>
+   - 标准化产品
+   - 利用技术
+   - 建立系统
+
+3. <strong>警惕边际成本陷阱</strong>
+   - 如果你的生意永远需要你亲自参与
+   - 本质上还是在"卖时间"
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 评估你的主要收入来源，边际成本是多少？有没有办法降低？
+
+---
+                    
+${getActionPrompt('边际成本')}
+`,
+                    points: 10
+                },
+                '复利': {
+                    title: '🔄 复利思维的财富秘密',
+                    content: `复利 = 今天努力，明天继续产生价值。
+
+<blockquote>做事情要追求可累积的效果。</blockquote>
+
+**复利在哪里？**
+- ✅ 学习（知识会累积）
+- ✅ 锻炼（身体是复利资产）
+- ✅ 建立关系（人脉是复利资产）
+- ✅ 积累技能（能力是复利资产）
+- ✅ 品牌建设（声誉是复利资产）
+
+**消耗复利的行为：**
+- ❌ 重复性无成长的工作
+- ❌ 无意义的社交
+- ❌ 消耗型消费
+- ❌ 坏习惯
+
+**财富复利公式：**
+<blockquote>财富 = 本金 × (1 + 收益率)^时间</blockquote>
+
+但更重要的"人生复利"是：
+<blockquote>认知 × 行动 × 时间 = 成就</blockquote>
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 列出你过去1个月做的事，哪些在积累复利？哪些在消耗你？
+
+---
+                    
+${getActionPrompt('复利')}
+`,
+                    points: 10
+                },
+                '第一性原理': {
+                    title: '🔮 第一性原理思维法',
+                    content: `第一性原理 = 从最基本的、不可拆分的假设出发思考问题。
+
+<blockquote>回到事物最本质的地方。</blockquote>
+
+**埃隆·马斯克的应用：**
+- 电池为什么贵？ → 原材料是什么？ → 重新组合
+- 火箭为什么贵？ → 火箭由什么构成？ → 成本结构重造
+
+**商业中的应用：**
+- "客户为什么付钱？" → 回到"解决了什么问题"
+- "为什么竞争不过对手？" → 回到"我们的差异化是什么"
+- "为什么卖不动？" → 回到"客户真的需要吗"
+
+**练习方法：**
+1. 看到一个现象，连续追问"为什么"
+2. 直到你找到最底层的假设
+3. 然后验证这个假设是否正确
+
+---
+                    
+<span class="tag-logic">底层逻辑</span>
+<span class="tag-action">立刻行动</span>
+
+**今天就做：** 选一个你当前最困惑的商业问题，连续追问5个"为什么"
+
+---
+                    
+${getActionPrompt('第一性原理')}
+`,
+                    points: 15
+                }
+            };
+
+            // 匹配关键词
+            for (const [key, data] of Object.entries(responses)) {
+                if (lowerMsg.includes(key)) {
+                    return `<h3>${data.title}</h3>` + data.content;
+                }
+            }
+
+            // 默认回复 - 苏格拉底式追问
+            return `<h3>🤔 让我帮你深度思考这个问题</h3>
+
+<span class="tag-thought">苏格拉底追问</span>
+
+你问的"${escapeHtml(userMessage.substring(0, 20))}..."这个问题很好。
+
+在回答之前，我想先问你几个问题：
+
+---
+
+**1. 你为什么关心这个问题？**
+
+（是为了解决一个实际困境，还是纯粹的好奇？）
+
+**2. 如果有了答案，你会怎么做？**
+
+（这个问题真的重要吗？值得投入多少时间？）
+
+**3. 你之前是怎么思考这个问题的？**
+
+（有没有形成过自己的观点？）
+
+---
+
+<blockquote>理解问题本身，比找到答案更重要。</blockquote>
+
+<span class="tag-logic">底层逻辑</span>
+
+请选择一个或几个问题回答，我会根据你的思考给出更深入的分析。
+
+---
+                    
+${getActionPrompt('通用')}
+`;
+        }
+
+        // 获取行动提示
+        function getActionPrompt(topic) {
+            const prompts = {
+                '创业': '💡 <strong>下一步行动：</strong>完成思考后，去找一个人真实地聊聊你的想法，听听他怎么说。',
+                '赚钱': '💡 <strong>下一步行动：</strong>写下你目前的收入来源，用"价值创造×价值传递×价值捕获"分析每个来源。',
+                '定价': '💡 <strong>下一步行动：</strong>联系一个用过类似产品的人，问他愿意付多少钱解决这个痛点。',
+                '获客': '💡 <strong>下一步行动：</strong>今天去你目标客户聚集的地方（线上社群/论坛），观察他们在聊什么。',
+                '底层逻辑': '💡 <strong>下一步行动：</strong>把这些思考写下来，找一个有商业经验的人讨论一下。',
+                '行动': '💡 <strong>下一步行动：</strong>现在就把"第一步"做了，不要等到准备好。',
+                '供需关系': '💡 <strong>下一步行动：</strong>分析你正在做的或想做的生意，供给端和需求端各有什么变化？',
+                '边际成本': '💡 <strong>下一步行动：</strong>计算你一个客户的边际成本，思考如何降低它。',
+                '复利': '💡 <strong>下一步行动：</strong>选择一个能积累复利的领域，开始投入（每天1小时、一年后来看）。',
+                '第一性原理': '💡 <strong>下一步行动：</strong>选择一个你正在纠结的决定，用第一性原理重新分析一遍。',
+                '通用': '💡 <strong>下一步行动：</strong>和你的想法和解，或者和你的行动和解。'
+            };
+            return prompts[topic] || prompts['通用'];
+        }
+
+        // ==================== 消息处理 ====================
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function addMessage(type, content) {
+            const chatArea = document.getElementById('chat-area');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = type === 'mentor' ? '🎯' : '👤';
+            messageDiv.innerHTML = `
+                <div class="avatar">${avatar}</div>
+                <div class="message-content">${content}</div>
+            `;
+            
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // 添加用户消息
+            addMessage('user', message);
+            input.value = '';
+            
+            // 状态更新
+            state.conversationCount++;
+            state.cognitionPoints += 5;
+            state.learningDays = Math.max(state.learningDays, Math.ceil(state.conversationCount / 3));
+            saveState();
+            updateStats();
+            
+            // 提取洞察
+            extractInsight(message);
+            
+            // 生成回复
+            setTimeout(() => {
+                const response = generateResponse(message);
+                addMessage('mentor', response);
+                
+                // 每次回复后增加认知点
+                state.cognitionPoints += 3;
+                saveState();
+                updateStats();
+            }, 500);
+        }
+
+        function extractInsight(message) {
+            // 简单提取关键词作为洞察
+            const keywords = ['创业', '赚钱', '定价', '获客', '供需', '边际', '复利', '底层'];
+            const matched = keywords.filter(k => message.includes(k));
+            
+            if (matched.length > 0) {
+                const topic = matched[0];
+                if (!state.insights.some(i => i.topic.includes(topic))) {
+                    state.insights.unshift({
+                        topic: `关于"${topic}"的讨论`,
+                        content: `探讨了${topic}的底层逻辑，理解了核心要点。`
+                    });
+                    // 限制显示最近5条
+                    if (state.insights.length > 5) {
+                        state.insights.pop();
+                    }
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadState();
+            loadDailyChallenge();
+            
+            // 初始化对话
+            const welcome = `👋 你好！我是**商道导师**，专注于帮你提升商业认知、找到赚钱路径。
+
+<span class="tag-logic">我的使命</span>
+- 🧠 帮你理解**商业底层逻辑**
+- ⚡ 引导你采取**有效行动**
+- 📈 陪你一起**实践和成长**
+
+---
+
+<span class="tag-thought">今天我想问你：</span>
+
+**你想要提升商业认知和赚钱能力的初心是什么？**
+
+是因为想创业？想增加收入？还是想理解商业运作的本质？
+
+回答这个问题，能帮我更好地帮助你。`;
+
+            addMessage('mentor', welcome);
+            
+            // 随机推送思考题
+            setTimeout(() => {
+                if (state.conversationCount === 0) {
+                    const tip = `<div class="thought-question">
+                        <div class="label">💡 被动学习：今日思考</div>
+                        在你开始之前，先思考一下：
+                        <strong>"我现在最想解决的商业问题是什么？"</strong>
+                    </div>`;
+                    addMessage('mentor', tip);
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
