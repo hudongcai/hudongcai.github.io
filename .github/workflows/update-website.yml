@@ -6,6 +6,9 @@ on:
     - cron: '0 15 * * *'
   workflow_dispatch:  # 支持手动触发
 
+permissions:
+  contents: write  # 需要写入权限才能提交
+
 jobs:
   update:
     runs-on: ubuntu-latest
