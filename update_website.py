@@ -546,7 +546,7 @@ def verify_items(items):
         if check_url(url):
             valid.append(item)
         else:
-            print(f"  ❌ 失效: {title[:35]}...")
+            print(f"  [X] 失效: {title[:35]}...")
     
     attempts = 0
     while len(valid) < 5 and attempts < 50:
@@ -555,7 +555,7 @@ def verify_items(items):
             for item in random.sample(cat_items, len(cat_items)):
                 if item not in valid and check_url(item[1]):
                     valid.append(item)
-                    print(f"  📦 补足: {item[0][:35]}...")
+                    print(f"  [+] 补足: {item[0][:35]}...")
                     break
             if len(valid) >= 5:
                 break
@@ -627,7 +627,7 @@ def generate_html(section_data):
 
 def main():
     print("=" * 60)
-    print("🤖 更新AI小栈网站内容")
+    print("[AI] 更新AI小栈网站内容")
     print("=" * 60)
     
     section_configs = [
@@ -640,7 +640,7 @@ def main():
     section_data = []
     
     for section_id, icon, title in section_configs:
-        print(f"\n📂 {icon} {title}")
+        print(f"\n[{icon}] {title}")
         items = select_items(section_id, 8)
         valid_items = verify_items(items)
         
@@ -656,7 +656,7 @@ def main():
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
-    print(f"\n✅ 已生成 index.html ({len(html_content)} 字符)")
+    print(f"\n[OK] 已生成 index.html ({len(html_content)} 字符)")
     print(f"   更新内容：{len(section_data)} 个板块，每板块 5 条")
     
     return 0
