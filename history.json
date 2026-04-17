@@ -1,6 +1,64 @@
 [
   {
     "date": "2026-04-17",
+    "timestamp": "2026-04-17T14:30:02.415609",
+    "content": {
+      "news": [
+        [
+          "从技术模型到场景落地：医疗AI如何真正走进医院",
+          "https://www3.xinhuanet.com/tech/20260415/ddfdbcb12bc94eaf968dd314424f3582/c.html",
+          "AI辅助诊断在多家医院实现规模化应用"
+        ],
+        [
+          "AI在金融、医疗、教育、制造业等领域落地指南",
+          "https://www.cnblogs.com/yjbjingcha/p/19088685",
+          "工业大模型、AI辅助诊断、智能零售等关键技术"
+        ],
+        [
+          "全球AI投资：硬件狂飙与应用落差",
+          "https://cloud.tencent.com.cn/developer/article/2655665",
+          "资本过度集中硬件，应用端商业化滞后"
+        ],
+        [
+          "DeepSeek-V3亮相：推理能力超越GPT-4o",
+          "https://www.zhifeiya.cn/news/2026-04-07-deepseek-v3-gpt-4o",
+          "国产大模型新突破，代码能力大幅提升"
+        ],
+        [
+          "2026年AI巨头全景深度解析：九大公司模型与资本博弈",
+          "https://zhuanlan.zhihu.com/p/2010476815681071043",
+          "OpenAI、Google DeepMind、Anthropic、Meta竞争格局"
+        ],
+        [
+          "阿里千问登顶全球调用榜：2026年4月AI圈动态",
+          "https://blog.csdn.net/weixin_41908519/article/details/159963116",
+          "从OpenAI刷新纪录到阿里千问登顶"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "2026年4月12日全球AI前沿动态：DeepSeek V4预计下旬发布",
+          "https://devpress.csdn.net/v1/article/detail/160087408",
+          "智谱GLM-5.1超越Claude Opus"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100 - 硅谷动力",
+          "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml",
+          "唯一评判标准交给实际应用效果"
+        ],
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ]
+      ]
+    }
+  },
+  {
+    "date": "2026-04-17",
     "timestamp": "2026-04-17T14:29:18.328087",
     "content": {
       "news": [
