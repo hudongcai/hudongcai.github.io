@@ -28,6 +28,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add index.html
-          git diff --quiet && git diff --cached --quiet || git commit -m "🤖 自动更新AI资讯 $(date +'%Y-%m-%d %H:%M')"
+          git add index.html history.json
+          git diff --quiet && git diff --cached --quiet || git commit -m "[Auto] Update AI News $(date +'%Y-%m-%d')"
           git push

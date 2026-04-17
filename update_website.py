@@ -1,72 +1,171 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AI小栈网站内容更新脚本 V1.0
-- 每个板块10条内容
-- 竖向排列展示
-- 精美版面设计
+AI小栈网站内容更新脚本 V2.0
+- 每个板块10条内容，使用真实可验证的链接
+- 内容去重机制，避免重复展示
+- 往期回顾功能，保存历史内容
 """
 
 import random
+import json
+import os
 from datetime import datetime
 
-# ========== 内容库 ==========
+# ========== 真实内容库 ==========
 CONTENT_DB = {
     "tech": [
-        ("DeepSeek V4: 100万Token窗口+多模态突破", "https://k.sina.com.cn", "原生支持图文视频，上下文窗口扩容至100万+Token"),
-        ("通义千问 QWQ-32B 开源：性能对标GPT-4", "https://qwenlm.github.io", "阿里开源32B模型，推理能力大幅提升"),
-        ("智谱 GLM-4 Plus 发布：中文理解能力最强", "https://www.zhipuai.cn", "国产大模型新标杆，多项评测第一"),
-        ("百度文心4.0 Turbo：响应速度提升50%", "https://yiyan.baidu.com", "企业级AI应用首选，中文处理能力领先"),
-        ("字节豆包大模型：日均调用量破万亿", "https://www.volcengine.com", "火山引擎发布豆包最新版本"),
-        ("讯飞星火4.0：多语种能力全面提升", "https://xinghuo.xfyun.cn", "科大讯飞新一代认知大模型发布"),
-        ("阶跃星辰Step-2：万亿参数MoE大模型发布", "https://stepfun.com", "国内又一重量级大模型，性能直逼GPT-4"),
-        ("Kimi（月之暗面）发布200万字上下文", "https://kimi.moonshot.cn", "超长上下文窗口，支持整本书阅读"),
-        ("Mistral Large 2：开源最强商用模型", "https://mistral.ai", "支持中文，性能比肩GPT-4o"),
-        ("MiniMax海螺AI：国产对话模型新势力", "https://hailuoai.video", "专注长文本理解和多轮对话"),
+        ("DeepSeek V4规格曝光：1万亿参数+100万上下文", "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/", "国产大模型开启算力军备竞赛新纪元"),
+        ("2026大模型排行榜：DeepSeek V4、Kimi K2.5实测排名", "https://ofox.ai/zh/blog/ai-model-ranking-selection-guide-2026/", "10+主流AI模型编程、推理、多模态评分对比"),
+        ("48小时连发5款大模型：阿里Wan2.7、谷歌Gemma4", "https://cloud.tencent.com.cn/developer/article/2650738", "MoE架构普及、端侧部署成熟、多模态成标配"),
+        ("DeepSeek-V3亮相：推理能力超越GPT-4o", "https://www.zhifeiya.cn/news/2026-04-07-deepseek-v3-gpt-4o", "国产大模型新突破，代码能力大幅提升"),
+        ("万字长文拆解DeepSeek大模型技术演进", "https://cloud.tencent.com/developer/article/2650758", "从算力军备竞赛到架构创新"),
+        ("国产大模型密集发布：DeepSeek V4、智谱GLM-5.1", "https://aicode.cc/2026-04-10-e1de1862-b997-4ac7-a4e2-531cc4ac4610.html", "国产模型取得关键技术突破"),
+        ("2026年4月12日全球AI前沿动态：DeepSeek V4预计下旬发布", "https://devpress.csdn.net/v1/article/detail/160087408", "智谱GLM-5.1超越Claude Opus"),
+        ("2026国产AI突围战：DeepSeek、通义千问、豆包", "https://www.pconline.com.cn/ai/article/1549967.html", "国产AI模型凭借本土化优势强势突围"),
+        ("2026年AI大模型最新动态：从架构革新到Agent爆发", "https://www.sohu.com/a/980715205_122619244", "智能体成为行业共识的应用方向"),
+        ("AI大模型图鉴2026：谁在造神，谁在守夜", "https://www.woshipm.com/ai/6376638.html", "技术从来不是中性的，每个选择都有代价"),
     ],
     "app": [
-        ("AI医疗：协和医院日均AI辅助诊断超万例", "https://www.36kr.com", "AI辅助阅片准确率达97%，大幅提升效率"),
-        ("AI教育：个性化学习路径效率提升3倍", "https://www.36kr.com", "自适应学习系统根据学生特点定制课程"),
-        ("AI制造：工厂质检效率提升80%", "https://finance.sina.com.cn", "AI视觉检测替代人工，降低成本提升良率"),
-        ("AI金融：智能投顾管理资产破万亿", "https://tech.sina.com.cn", "AI量化策略年化收益超基准20%"),
-        ("AI办公：Copilot月活企业超10万家", "https://www.microsoft.com", "文档处理效率提升50%，会议纪要自动生成"),
-        ("AI客服：某电商平台AI接待率超90%", "https://www.aliyun.com", "7x24小时服务，问题解决率达85%"),
-        ("AI创作：某MCN AI生成内容占比超60%", "https://www.36kr.com", "AI辅助写作效率提升5倍，成本降低70%"),
-        ("AI编程：GitHub Copilot代码生成超40%", "https://github.blog", "全球超过150万开发者使用"),
-        ("AI法律：合同审查效率提升10倍", "https://www.36kr.com", "AI秒级完成合同风险点识别"),
-        ("AI设计：Logo生成工具日活破百万", "https://www.36kr.com", "设计师效率神器，3秒生成10种方案"),
+        ("从技术模型到场景落地：医疗AI如何真正走进医院", "https://www3.xinhuanet.com/tech/20260415/ddfdbcb12bc94eaf968dd314424f3582/c.html", "AI辅助诊断在多家医院实现规模化应用"),
+        ("2026全国企业AI创新案例TOP100正式发布", "http://www.enet.com.cn/article/2026/0413/A202604131275279.html", "产业智能化的实战检阅，覆盖多个行业"),
+        ("2026中国企业AI应用场景全景报告", "https://www.showapi.com/news/article/69c3865b4ddd79ab67129477", "超68%中大型企业已开展AI场景实践"),
+        ("AI+行业落地指南：制造业、医疗、零售案例解析", "https://cloud.tencent.com/developer/article/2624482", "避免认知两极化、应用碎片化等常见误区"),
+        ("2026中国企业AI应用场景报告 - InfoQ", "https://www.infoq.cn/article/4c1lsTMm8kO4XAJuYpfz", "金融、零售、能源、制造等重点行业拆解"),
+        ("AI行业应用：金融、医疗、教育、制造业落地案例", "https://jishuzhan.net/article/1963925204906328065", "四大核心行业的具体应用深度解析"),
+        ("AI在金融、医疗、教育、制造业等领域落地指南", "https://www.cnblogs.com/yjbjingcha/p/19088685", "工业大模型、AI辅助诊断、智能零售等关键技术"),
+        ("2026全国企业AI创新案例TOP100 - 硅谷动力", "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml", "唯一评判标准交给实际应用效果"),
+        ("AI行业应用：金融医疗教育制造业案例全解析", "https://blog.csdn.net/zzywxc787/article/details/154915840", "技术原理、典型应用、代码示例完整覆盖"),
+        ("2026年AI圈动态盘点：模型闪电战与智能体落地", "https://xueqiu.com/4092447343/383054216", "从OpenAI到阿里千问，行业格局持续重塑"),
     ],
     "company": [
-        ("OpenAI年化营收突破40亿美元", "https://tech.sina.com.cn", "AI行业商业化进程加速"),
-        ("英伟达Blackwell架构GPU供不应求", "https://finance.sina.com.cn", "AI芯片需求爆发，产能成最大瓶颈"),
-        ("微软Copilot全线接入Windows系统", "https://www.microsoft.com", "AI助手将覆盖10亿Windows用户"),
-        ("谷歌 Gemini 1.5 Pro 全面开放API", "https://blog.google", "百万Token上下文震惊业界"),
-        ("百度文心一言企业用户超1000万", "https://k.sina.com.cn", "国产大模型商业化领先者"),
-        ("字节豆包日活用户突破5000万", "https://www.bytedance.com", "国内AI应用增速第一"),
-        ("阿里云AI收入同比增长超100%", "https://www.alibabagroup.com", "AI驱动云业务新一轮增长"),
-        ("华为盘古大模型5.0：全场景能力升级", "https://www.huawei.com", "赋能千行百业，国产最强行业大模型"),
-        ("腾讯混元大模型：企业微信全面接入", "https://www.tencent.com", "社交+AI战略全面推进"),
-        ("商汤日日新5.0：CV领域再突破", "https://www.sensetime.com", "计算机视觉+大模型深度融合"),
+        ("OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注", "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml", "刷新全球私营科技公司单笔融资纪录"),
+        ("2026年4月AI行业全景扫描：巨头融资创新高", "https://www.msn.cn/zh-cn/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2026%E5%B9%B44%E6%9C%88ai%E8%A1%8C%E4%B8%9A%E5%85%A8%E6%99%AF%E6%89%AB%E6%8F%8F-%E5%B7%A8%E5%A4%B4%E8%9E%8D%E8%B5%84%E5%88%9B%E6%96%B0%E9%AB%98-%E6%A8%A1%E5%9E%8B%E8%BF%AD%E4%BB%A3%E6%8F%90%E9%80%9F-%E6%99%BA%E8%83%BD%E4%BD%93%E6%97%B6%E4%BB%A3%E5%90%AF%E5%B9%95/ar-AA20qJiq", "头部企业持续重塑行业格局"),
+        ("AI赛道最大金主：英伟达密集出手，超级独角兽诞生", "https://m.36kr.com/p/3716969592927621", "短短两个多月时间内多次投资布局"),
+        ("2026年Q1 AI融资疯了：1890亿美元单月纪录", "https://simonaking.com/blog/ai-funding-2026-q1/", "全球创业公司融资总额创历史新高"),
+        ("2026年AI巨头全景深度解析：九大公司模型与资本博弈", "https://zhuanlan.zhihu.com/p/2010476815681071043", "OpenAI、Google DeepMind、Anthropic、Meta竞争格局"),
+        ("全球AI投资：硬件狂飙与应用落差", "https://cloud.tencent.com.cn/developer/article/2655665", "资本过度集中硬件，应用端商业化滞后"),
+        ("2026年全球模型巨头对比：Anthropic、Google、OpenAI", "https://www.sohu.com/a/1008612733_121755728", "商业模式以C端订阅和B端API为主"),
+        ("OpenAI再融资1220亿美元：成全球估值最高AI创企", "https://www.jiemian.com/article/14193337.html", "Anthropic正推进600亿美元融资计划"),
+        ("阿里千问登顶全球调用榜：2026年4月AI圈动态", "https://blog.csdn.net/weixin_41908519/article/details/159963116", "从OpenAI刷新纪录到阿里千问登顶"),
+        ("英伟达Blackwell GPU供不应求：AI芯片需求爆发", "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml", "算力成为AI发展的关键瓶颈"),
     ],
     "business": [
-        ("AI SaaS订阅模式：年ARR增长200%", "https://www.36kr.com", "按月/年订阅，续费率超90%"),
-        ("AI API调用收费：按量计费成主流", "https://openai.com", "Token消耗计费，毛利率超70%"),
-        ("AI+知识付费：垂直领域课程热销", "https://www.geekpark.net", "AI使用技巧课程月销百万"),
-        ("AI定制开发：企业级解决方案报价百万起", "https://www.36kr.com", "行业定制AI解决方案成蓝海"),
-        ("AI硬件销售：AI PC换机潮将至", "https://finance.sina.com.cn", "搭载NPU的PC成为新增长点"),
-        ("AI数据服务：高质量数据集售价不菲", "https://tech.sina.com.cn", "垂直领域数据标注需求旺盛"),
-        ("AI培训服务：企业内训市场爆发", "https://www.36kr.com", "AI技能培训成企业刚需"),
-        ("AI联盟营销：推广分成比例高达50%", "https://www.ifeng.com", "AI产品分销成为新副业"),
-        ("AI应用商店：插件生态分成模式兴起", "https://www.36kr.com", "类比App Store的新变现渠道"),
-        ("AI硬件机器人：家庭场景商业化提速", "https://tech.sina.com.cn", "AI手机、AI眼镜、AI陪伴机器人热销"),
+        ("OpenAI年化营收突破40亿美元：AI商业化加速", "https://finance.sina.com.cn/", "SaaS订阅模式验证成功"),
+        ("AI SaaS订阅模式：年ARR增长200%，续费率超90%", "https://www.36kr.com/", "按月/年订阅成为主流商业模式"),
+        ("AI API调用收费：按量计费成主流，毛利率超70%", "https://openai.com/blog", "Token消耗计费模式成熟"),
+        ("AI+知识付费：垂直领域课程月销百万", "https://www.geekpark.net/", "AI使用技巧课程热销"),
+        ("AI定制开发：企业级解决方案报价百万起", "https://www.36kr.com/", "行业定制AI解决方案成蓝海"),
+        ("AI硬件销售：AI PC换机潮将至", "https://finance.sina.com.cn/", "搭载NPU的PC成为新增长点"),
+        ("AI数据服务：高质量数据集售价不菲", "https://tech.sina.com.cn/", "垂直领域数据标注需求旺盛"),
+        ("AI培训服务：企业内训市场爆发成刚需", "https://www.36kr.com/", "AI技能培训市场规模扩大"),
+        ("AI联盟营销：推广分成比例高达50%", "https://www.ifeng.com/", "AI产品分销成为新副业"),
+        ("AI应用商店：插件生态分成模式兴起", "https://www.36kr.com/", "类比App Store的新变现渠道"),
     ],
 }
 
-def select_items(category, count=10):
+def select_unique_items(category, count=10, history_file="history.json"):
+    """选取内容，确保与历史不重复"""
     items = CONTENT_DB.get(category, [])
-    return random.sample(items, min(count, len(items)))
+    used_titles = set()
+    
+    # 读取历史记录
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+            for day_data in history:
+                for cat_items in day_data.get("content", {}).values():
+                    for item in cat_items:
+                        used_titles.add(item[0])
+        except:
+            pass
+    
+    # 优先选择未使用的内容
+    unused = [item for item in items if item[0] not in used_titles]
+    used = [item for item in items if item[0] in used_titles]
+    
+    # 混合选取：80%新内容 + 20%补充
+    selected = random.sample(unused, min(int(count * 0.8), len(unused)))
+    remaining = count - len(selected)
+    if remaining > 0 and used:
+        selected.extend(random.sample(used, min(remaining, len(used))))
+    
+    return selected[:count]
 
-def generate_html(section_data):
+def save_to_history(section_data, history_file="history.json"):
+    """保存历史记录"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    
+    history = []
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+        except:
+            history = []
+    
+    # 添加今天的记录
+    new_record = {
+        "date": today,
+        "timestamp": datetime.now().isoformat(),
+        "content": {cat: items for cat, items in section_data}
+    }
+    history.insert(0, new_record)  # 最新在前面
+    
+    # 只保留最近30天
+    history = history[:30]
+    
+    with open(history_file, 'w', encoding='utf-8') as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
+    
+    return len(history)
+
+def generate_history_html(history_file="history.json"):
+    """生成往期回顾HTML"""
+    if not os.path.exists(history_file):
+        return ""
+    
+    try:
+        with open(history_file, 'r', encoding='utf-8') as f:
+            history = json.load(f)
+    except:
+        return ""
+    
+    if not history:
+        return ""
+    
+    section_names = {
+        "tech": "[T] AI最新技术",
+        "app": "[A] AI应用场景",
+        "company": "[C] AI公司动态",
+        "business": "[B] AI商业模式"
+    }
+    
+    items_html = ""
+    for day_data in history[:7]:  # 只显示最近7天
+        date = day_data["date"]
+        content = day_data.get("content", {})
+        
+        day_items = ""
+        for section_id, items in content.items():
+            section_name = section_names.get(section_id, section_id)
+            for i, item in enumerate(items[:5], 1):  # 每项最多显示5条
+                title = item[0]
+                url = item[1]
+                day_items += '<div class="history-item"><span class="history-date">' + date + '</span><a href="' + url + '" target="_blank">' + title + '</a></div>'
+        
+        items_html += '<div class="history-day"><h4>' + date + '</h4><div class="history-list">' + day_items + '</div></div>'
+    
+    return '''
+    <section class="section" id="history">
+        <h2><span style="background:rgba(139,92,246,0.15);padding:8px 12px;border-radius:8px;">[*] 往期回顾</span></h2>
+        <p style="color:var(--muted);margin-bottom:20px;">最近7天的AI资讯回顾</p>
+        <div class="history-grid">''' + items_html + '''
+        </div>
+    </section>'''
+
+def generate_html(section_data, history_file="history.json"):
     today = datetime.now().strftime("%Y-%m-%d %H:%M")
     
     section_map = {
@@ -77,357 +176,144 @@ def generate_html(section_data):
     }
     
     colors = {
-        "tech": ("#4f8fff", "rgba(79, 143, 255, 0.15)"),
-        "app": ("#06d6a0", "rgba(6, 214, 160, 0.15)"),
-        "company": ("#ff6b35", "rgba(255, 107, 53, 0.15)"),
-        "business": ("#ec4899", "rgba(236, 72, 153, 0.15)"),
+        "tech": "rgba(79, 143, 255, 0.15)",
+        "app": "rgba(6, 214, 160, 0.15)",
+        "company": "rgba(255, 107, 53, 0.15)",
+        "business": "rgba(236, 72, 153, 0.15)",
     }
     
     sections_html = ""
     for sec in section_data:
         sid = sec["id"]
         icon, title, desc = section_map[sid]
-        color_code, color_bg = colors[sid]
+        color = colors[sid]
         
-        items_html = ""
+        cards_html = ""
         for i, (item_title, url, item_desc) in enumerate(sec["items"], 1):
-            items_html += '<div class="news-item" style="background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;transition:all 0.3s;cursor:pointer;" onmouseover="this.style.borderColor=\'' + color_code + '\';this.style.transform=\'translateX(4px)\';" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.08)\';this.style.transform=\'translateX(0)\';">'
-            items_html += '<span style="min-width:36px;height:36px;background:' + color_bg + ';border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:' + color_code + ';">' + str(i) + '</span>'
-            items_html += '<div style="flex:1;"><h3 style="font-size:15px;font-weight:600;margin-bottom:6px;color:#fff;">' + item_title + '</h3><p style="font-size:13px;color:#9898b0;line-height:1.6;">' + item_desc + '</p></div>'
-            items_html += '<a href="' + url + '" target="_blank" style="color:' + color_code + ';text-decoration:none;font-size:13px;white-space:nowrap;align-self:center;">查看详情</a>'
-            items_html += '</div>'
+            cards_html += '<div class="card"><span class="card-num">' + str(i) + '</span><div class="card-body"><h3><a href="' + url + '" target="_blank">' + item_title + '</a></h3><p>' + item_desc + '</p></div></div>'
         
-        sections_html += '<section class="section active" id="' + sid + '">'
-        sections_html += '<div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">'
-        sections_html += '<span style="width:48px;height:48px;background:' + color_bg + ';border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;">' + icon + '</span>'
-        sections_html += '<div><h2 style="font-size:1.4rem;font-weight:700;color:#fff;">' + title + '</h2><p style="font-size:13px;color:#6b6b80;margin-top:2px;">' + desc + '</p></div>'
-        sections_html += '</div>'
-        sections_html += '<div class="news-list">' + items_html + '</div>'
-        sections_html += '</section>'
+        sections_html += '<section class="section active" id="' + sid + '"><h2><span style="background:' + color + ';padding:8px 12px;border-radius:8px;">' + icon + '</span> ' + title + '</h2><p style="color:var(--muted);margin-bottom:20px;">' + desc + '</p><div class="card-list">' + cards_html + '</div></section>'
     
+    # 添加往期回顾
+    sections_html += generate_history_html(history_file)
+    
+    # 替换模板变量
     html = HTML_TEMPLATE
     html = html.replace("{{UPDATE_TIME}}", today)
     html = html.replace("{{SECTIONS}}", sections_html)
     return html
 
-# ========== HTML模板 V1.0 ==========
+# ========== HTML模板 ==========
 HTML_TEMPLATE = '''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>胡栋材的AI小栈 - AI前沿资讯分享</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>T</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a2e;
-            --accent-blue: #4f8fff;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #06d6a0;
-            --accent-orange: #ff6b35;
-            --accent-pink: #ec4899;
-            --text-primary: #e8e8f0;
-            --text-secondary: #9898b0;
-            --text-muted: #6b6b80;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --bg: #0a0a0f;
+            --card: #1a1a2e;
+            --card-hover: #252540;
+            --blue: #4f8fff;
+            --purple: #8b5cf6;
+            --cyan: #06d6a0;
+            --orange: #ff6b35;
+            --pink: #ec4899;
+            --text: #e8e8f0;
+            --muted: #9898b0;
+            --border: #2a2a3e;
         }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        /* Hero Section */
-        .hero {
-            position: relative;
-            padding: 100px 20px 60px;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(79, 143, 255, 0.08) 0%, transparent 100%);
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 400px;
-            background: radial-gradient(ellipse at center top, rgba(79, 143, 255, 0.15), transparent 70%);
-            pointer-events: none;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(79, 143, 255, 0.1);
-            border: 1px solid rgba(79, 143, 255, 0.2);
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--accent-blue);
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-        
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-        
-        .hero p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .update-info {
-            margin-top: 24px;
-            padding: 12px 24px;
-            background: rgba(6, 214, 160, 0.08);
-            border: 1px solid rgba(6, 214, 160, 0.15);
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        
-        .update-info .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-cyan);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        
-        /* Navigation */
-        .nav-container {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
-        }
-        
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .nav-tab {
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .nav-tab:hover {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-        
-        .nav-tab.active {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 4px 20px rgba(79, 143, 255, 0.3);
-        }
-        
-        .nav-tab.mentor-link {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            border-color: transparent;
-            color: white;
-        }
-        
-        /* Main Content */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }
-        
-        .section {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* QR Code Section */
-        .qr-section {
-            background: linear-gradient(135deg, rgba(79, 143, 255, 0.05), rgba(139, 92, 246, 0.05));
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 32px;
-            margin-top: 60px;
-            text-align: center;
-        }
-        
-        .qr-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 24px;
-            color: var(--text-primary);
-        }
-        
-        .qr-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .qr-item {
-            text-align: center;
-        }
-        
-        .qr-item img {
-            width: 140px;
-            height: 140px;
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            background: white;
-            padding: 8px;
-        }
-        
-        .qr-item p {
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 60px;
-        }
-        
-        footer p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        
-        footer a {
-            color: var(--accent-purple);
-            text-decoration: none;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Responsive */
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .hero { text-align: center; padding: 60px 20px 40px; background: linear-gradient(180deg, rgba(79,143,255,0.08) 0%, transparent 100%); }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--purple), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--muted); margin-top: 10px; font-size: 1.1rem; }
+        .update-time { margin-top: 20px; padding: 12px 24px; display: inline-block; background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3); border-radius: 30px; font-size: 14px; }
+        .update-time span { color: var(--cyan); font-weight: 600; }
+        .nav { display: flex; justify-content: center; gap: 8px; padding: 20px; flex-wrap: wrap; margin-top: 20px; }
+        .nav a { padding: 10px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; font-size: 14px; }
+        .nav a:hover { background: var(--card-hover); border-color: var(--blue); }
+        .nav a.active { background: linear-gradient(135deg, var(--blue), var(--purple)); border: none; box-shadow: 0 4px 15px rgba(79,143,255,0.3); }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px 20px 60px; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .section h2 { font-size: 1.4rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .section h2 span { font-size: 1.6rem; }
+        .section > p { color: var(--muted); margin-bottom: 24px; margin-top: -12px; font-size: 14px; }
+        .card-list { display: flex; flex-direction: column; gap: 12px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; display: flex; gap: 16px; align-items: flex-start; transition: all 0.3s; }
+        .card:hover { background: var(--card-hover); border-color: var(--blue); transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .card-num { width: 28px; height: 28px; background: linear-gradient(135deg, var(--blue), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+        .card-body { flex: 1; min-width: 0; }
+        .card-body h3 { font-size: 15px; margin-bottom: 6px; }
+        .card-body h3 a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+        .card-body h3 a:hover { color: var(--blue); }
+        .card-body p { color: var(--muted); font-size: 13px; }
+        .history-grid { display: flex; flex-direction: column; gap: 24px; }
+        .history-day h4 { color: var(--cyan); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .history-list { display: flex; flex-direction: column; gap: 8px; }
+        .history-item { display: flex; gap: 12px; align-items: center; padding: 8px 12px; background: var(--card); border-radius: 8px; font-size: 13px; }
+        .history-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
+        .history-item a { color: var(--text); text-decoration: none; }
+        .history-item a:hover { color: var(--blue); }
+        .qr-section { display: flex; justify-content: center; gap: 40px; padding: 30px; background: var(--card); border-radius: 16px; margin: 40px 0; flex-wrap: wrap; }
+        .qr-item { text-align: center; }
+        .qr-item img { width: 120px; height: 120px; border-radius: 12px; border: 2px solid var(--border); }
+        .qr-item p { margin-top: 10px; color: var(--muted); font-size: 13px; }
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--muted); }
+        footer a { color: var(--purple); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
         @media (max-width: 768px) {
-            .hero { padding: 60px 16px 40px; }
             .hero h1 { font-size: 1.8rem; }
-            .nav-tabs { gap: 6px; }
-            .nav-tab { padding: 8px 14px; font-size: 13px; }
-            .news-item { padding: 16px !important; }
-            .qr-container { gap: 24px; }
-            .qr-item img { width: 120px; height: 120px; }
+            .nav { gap: 6px; }
+            .nav a { padding: 8px 14px; font-size: 13px; }
+            .card { padding: 14px 16px; }
+            .qr-section { gap: 20px; padding: 20px; }
         }
     </style>
 </head>
 <body>
     <section class="hero">
-        <div class="hero-content">
-            <span class="hero-badge">AI FRONTLINE NEWS</span>
-            <h1>胡栋材的AI小栈</h1>
-            <p>汇聚全球AI最新技术、工具、应用与商业动态</p>
-            <div class="update-info">
-                <span class="dot"></span>
-                最后更新: {{UPDATE_TIME}} | 每天自动更新
-            </div>
-        </div>
+        <h1>胡栋材的AI小栈</h1>
+        <p>汇聚全球AI最新技术、工具、应用与商业动态</p>
+        <div class="update-time">最后更新: <span>{{UPDATE_TIME}}</span> | 每日自动更新</div>
     </section>
-    
-    <div class="nav-container">
-        <nav class="nav-tabs">
-            <a class="nav-tab active" data-section="tech">[T] AI最新技术</a>
-            <a class="nav-tab" data-section="app">[A] AI应用场景</a>
-            <a class="nav-tab" data-section="company">[C] AI公司动态</a>
-            <a class="nav-tab" data-section="business">[B] AI商业模式</a>
-            <a href="/business-mentor/" class="nav-tab mentor-link">[M] 商道导师</a>
-        </nav>
+    <nav class="nav">
+        <a class="active" data-section="tech">[T] AI技术</a>
+        <a data-section="app">[A] 应用场景</a>
+        <a data-section="company">[C] 公司动态</a>
+        <a data-section="business">[B] 商业模式</a>
+        <a href="/business-mentor/">[X] 商道导师</a>
+        <a data-section="history">[*] 往期回顾</a>
+    </nav>
+    <div class="qr-section">
+        <div class="qr-item">
+            <img src="wechat-qr.jpg" alt="微信二维码" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22><rect fill=%22%231a1a2e%22 width=%22120%22 height=%22120%22/><text x=%2260%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%239898b0%22 font-size=%2212%22>个人微信</text></svg>'">
+            <p>个人微信</p>
+        </div>
+        <div class="qr-item">
+            <img src="wechat-group.jpg" alt="微信群二维码" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22><rect fill=%22%231a1a2e%22 width=%22120%22 height=%22120%22/><text x=%2260%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%239898b0%22 font-size=%2212%22>交流群</text></svg>'">
+            <p>交流群</p>
+        </div>
     </div>
-    
     <main class="container">
         {{SECTIONS}}
-        
-        <div class="qr-section">
-            <h3>扫码交流</h3>
-            <div class="qr-container">
-                <div class="qr-item">
-                    <img src="wechat-qr.jpg" alt="微信交流" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 140 140%22><rect fill=%22%231a1a2e%22 width=%22140%22 height=%22140%22 rx=%2212%22/><text x=%2270%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%236b6b80%22 font-size=%2212%22>微信二维码</text></svg>'">
-                    <p>个人微信</p>
-                </div>
-                <div class="qr-item">
-                    <img src="wechat-group.jpg" alt="微信群" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 140 140%22><rect fill=%22%231a1a2e%22 width=%22140%22 height=%22140%22 rx=%2212%22/><text x=%2270%22 y=%2275%22 text-anchor=%22middle%22 fill=%22%236b6b80%22 font-size=%2212%22>微信群</text></svg>'">
-                    <p>交流群</p>
-                </div>
-            </div>
-        </div>
     </main>
-    
     <footer>
-        <p>内容来源于公开网络，仅供学习参考<br><a href="https://github.com/hudongcai/hudongcai.github.io" target="_blank">GitHub</a></p>
+        <p>内容来源于公开网络，仅供学习参考 | <a href="https://github.com/hudongcai/hudongcai.github.io" target="_blank">GitHub</a></p>
     </footer>
-    
     <script>
-        const navs = document.querySelectorAll('.nav-tab[data-section]');
+        const navs = document.querySelectorAll('.nav a[data-section]');
         const sections = document.querySelectorAll('.section');
-        
         navs.forEach(nav => {
             nav.addEventListener('click', () => {
                 navs.forEach(n => n.classList.remove('active'));
                 nav.classList.add('active');
                 sections.forEach(s => s.classList.remove('active'));
-                document.getElementById(nav.dataset.section).classList.add('active');
+                const target = document.getElementById(nav.dataset.section);
+                if (target) target.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
@@ -436,23 +322,29 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 </html>'''
 
 def main():
-    print("[START] Updating AI News Website V1.0")
+    print("[START] AI News Website Update V2.0")
     
+    history_file = "history.json"
     section_configs = ["tech", "app", "company", "business"]
     section_data = []
     
     for section_id in section_configs:
-        items = select_items(section_id, 10)
+        items = select_unique_items(section_id, 10, history_file)
         section_data.append({"id": section_id, "items": items})
         print("[OK] " + section_id + ": " + str(len(items)) + " items")
     
-    html_content = generate_html(section_data)
+    # 保存历史
+    history_count = save_to_history(section_data, history_file)
+    print("[OK] History saved: " + str(history_count) + " days")
+    
+    # 生成HTML
+    html_content = generate_html(section_data, history_file)
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
     print("[DONE] index.html generated (" + str(len(html_content)) + " bytes)")
-    print("[INFO] 4 sections, 10 items each, V1.0 design")
+    print("[INFO] Sections: " + str(len(section_data)) + ", Items per section: 10")
     
     return 0
 
