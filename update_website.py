@@ -84,7 +84,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
         .hero h1 { font-size: 2.5rem; background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: var(--muted); margin-top: 10px; }
         .update-time { margin-top: 15px; color: var(--muted); font-size: 14px; }
-        .update-time span { color: var(--cyan); }
+        .update-time span {{ color: var(--cyan); }}
         .nav { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
         .nav a { padding: 10px 20px; background: var(--card); border: 1px solid #333; border-radius: 25px; color: var(--text); text-decoration: none; cursor: pointer; transition: all 0.3s; }
         .nav a:hover { background: #2a2a40; }
@@ -171,20 +171,9 @@ def generate_html(section_data):
         
         cards_html = ""
         for i, (item_title, url, item_desc) in enumerate(sec["items"], 1):
-            cards_html += f'''
-        <div class="card">
-            <h3>{i}. {item_title}</h3>
-            <p>{item_desc}</p>
-            <a href="{url}" target="_blank">阅读原文</a>
-        </div>'''
+            cards_html += f'<div class="card"><h3>{i}. {item_title}</h3><p>{item_desc}</p><a href="{url}" target="_blank">阅读原文</a></div>'
         
-        sections_html += f'''
-        <section class="section active" id="{sid}">
-            <h2><span style="background:{color};padding:8px 12px;border-radius:8px;">{icon}</span> {title}</h2>
-            <p style="color:var(--muted);margin-bottom:20px;">{desc}</p>
-            <div class="grid">{cards_html}
-            </div>
-        </section>'''
+        sections_html += f'<section class="section active" id="{sid}"><h2><span style="background:{color};padding:8px 12px;border-radius:8px;">{icon}</span> {title}</h2><p style="color:var(--muted);margin-bottom:20px;">{desc}</p><div class="grid">{cards_html}</div></section>'
     
     return HTML_TEMPLATE.format(update_time=today, sections=sections_html)
 
