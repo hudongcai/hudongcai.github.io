@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-19",
+    "timestamp": "2026-04-19T15:31:27.132533",
+    "content": {
+      "news": [
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100 - 硅谷动力",
+          "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml",
+          "唯一评判标准交给实际应用效果"
+        ],
+        [
+          "从技术模型到场景落地：医疗AI如何真正走进医院",
+          "https://www3.xinhuanet.com/tech/20260415/ddfdbcb12bc94eaf968dd314424f3582/c.html",
+          "AI辅助诊断在多家医院实现规模化应用"
+        ],
+        [
+          "AI+行业落地指南：制造业、医疗、零售案例解析",
+          "https://cloud.tencent.com/developer/article/2624482",
+          "避免认知两极化、应用碎片化等常见误区"
+        ],
+        [
+          "国产大模型密集发布：DeepSeek V4、智谱GLM-5.1",
+          "https://aicode.cc/2026-04-10-e1de1862-b997-4ac7-a4e2-531cc4ac4610.html",
+          "国产模型取得关键技术突破"
+        ],
+        [
+          "2026中国企业AI应用场景报告 - InfoQ",
+          "https://www.infoq.cn/article/4c1lsTMm8kO4XAJuYpfz",
+          "金融、零售、能源、制造等重点行业拆解"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "2026大模型排行榜：DeepSeek V4、Kimi K2.5实测排名",
+          "https://ofox.ai/zh/blog/ai-model-ranking-selection-guide-2026/",
+          "10+主流AI模型编程、推理、多模态评分对比"
+        ],
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-18",
     "timestamp": "2026-04-18T15:31:11.394268",
     "content": {
