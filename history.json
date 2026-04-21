@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-21",
+    "timestamp": "2026-04-21T16:05:50.795318",
+    "content": {
+      "news": [
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ],
+        [
+          "AI赛道最大金主：英伟达密集出手，超级独角兽诞生",
+          "https://m.36kr.com/p/3716969592927621",
+          "短短两个多月时间内多次投资布局"
+        ],
+        [
+          "2026年AI大模型最新动态：从架构革新到Agent爆发",
+          "https://www.sohu.com/a/980715205_122619244",
+          "智能体成为行业共识的应用方向"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "AI行业应用：金融医疗教育制造业案例全解析",
+          "https://blog.csdn.net/zzywxc787/article/details/154915840",
+          "技术原理、典型应用、代码示例完整覆盖"
+        ],
+        [
+          "OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "刷新全球私营科技公司单笔融资纪录"
+        ],
+        [
+          "48小时连发5款大模型：阿里Wan2.7、谷歌Gemma4",
+          "https://cloud.tencent.com.cn/developer/article/2650738",
+          "MoE架构普及、端侧部署成熟、多模态成标配"
+        ],
+        [
+          "2026国产AI突围战：DeepSeek、通义千问、豆包",
+          "https://www.pconline.com.cn/ai/article/1549967.html",
+          "国产AI模型凭借本土化优势强势突围"
+        ],
+        [
+          "2026年4月12日全球AI前沿动态：DeepSeek V4预计下旬发布",
+          "https://devpress.csdn.net/v1/article/detail/160087408",
+          "智谱GLM-5.1超越Claude Opus"
+        ],
+        [
+          "2026年AI巨头全景深度解析：九大公司模型与资本博弈",
+          "https://zhuanlan.zhihu.com/p/2010476815681071043",
+          "OpenAI、Google DeepMind、Anthropic、Meta竞争格局"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-20",
     "timestamp": "2026-04-20T16:02:29.953551",
     "content": {
