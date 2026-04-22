@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-22",
+    "timestamp": "2026-04-22T16:03:52.195585",
+    "content": {
+      "news": [
+        [
+          "2026年Q1 AI融资疯了：1890亿美元单月纪录",
+          "https://simonaking.com/blog/ai-funding-2026-q1/",
+          "全球创业公司融资总额创历史新高"
+        ],
+        [
+          "2026中国企业AI应用场景报告 - InfoQ",
+          "https://www.infoq.cn/article/4c1lsTMm8kO4XAJuYpfz",
+          "金融、零售、能源、制造等重点行业拆解"
+        ],
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ],
+        [
+          "AI+行业落地指南：制造业、医疗、零售案例解析",
+          "https://cloud.tencent.com/developer/article/2624482",
+          "避免认知两极化、应用碎片化等常见误区"
+        ],
+        [
+          "48小时连发5款大模型：阿里Wan2.7、谷歌Gemma4",
+          "https://cloud.tencent.com.cn/developer/article/2650738",
+          "MoE架构普及、端侧部署成熟、多模态成标配"
+        ],
+        [
+          "OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "刷新全球私营科技公司单笔融资纪录"
+        ],
+        [
+          "AI行业应用：金融、医疗、教育、制造业落地案例",
+          "https://jishuzhan.net/article/1963925204906328065",
+          "四大核心行业的具体应用深度解析"
+        ],
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ],
+        [
+          "阿里千问登顶全球调用榜：2026年4月AI圈动态",
+          "https://blog.csdn.net/weixin_41908519/article/details/159963116",
+          "从OpenAI刷新纪录到阿里千问登顶"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-21",
     "timestamp": "2026-04-21T16:05:50.795318",
     "content": {
