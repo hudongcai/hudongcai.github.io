@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-24",
+    "timestamp": "2026-04-24T16:00:09.865260",
+    "content": {
+      "news": [
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "英伟达Blackwell GPU供不应求：AI芯片需求爆发",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "算力成为AI发展的关键瓶颈"
+        ],
+        [
+          "2026中国企业AI应用场景报告 - InfoQ",
+          "https://www.infoq.cn/article/4c1lsTMm8kO4XAJuYpfz",
+          "金融、零售、能源、制造等重点行业拆解"
+        ],
+        [
+          "2026年Q1 AI融资疯了：1890亿美元单月纪录",
+          "https://simonaking.com/blog/ai-funding-2026-q1/",
+          "全球创业公司融资总额创历史新高"
+        ],
+        [
+          "2026年4月12日全球AI前沿动态：DeepSeek V4预计下旬发布",
+          "https://devpress.csdn.net/v1/article/detail/160087408",
+          "智谱GLM-5.1超越Claude Opus"
+        ],
+        [
+          "阿里千问登顶全球调用榜：2026年4月AI圈动态",
+          "https://blog.csdn.net/weixin_41908519/article/details/159963116",
+          "从OpenAI刷新纪录到阿里千问登顶"
+        ],
+        [
+          "AI在金融、医疗、教育、制造业等领域落地指南",
+          "https://www.cnblogs.com/yjbjingcha/p/19088685",
+          "工业大模型、AI辅助诊断、智能零售等关键技术"
+        ],
+        [
+          "2026国产AI突围战：DeepSeek、通义千问、豆包",
+          "https://www.pconline.com.cn/ai/article/1549967.html",
+          "国产AI模型凭借本土化优势强势突围"
+        ],
+        [
+          "AI+行业落地指南：制造业、医疗、零售案例解析",
+          "https://cloud.tencent.com/developer/article/2624482",
+          "避免认知两极化、应用碎片化等常见误区"
+        ],
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-22",
     "timestamp": "2026-04-22T16:03:52.195585",
     "content": {
