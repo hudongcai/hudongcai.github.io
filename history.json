@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-28",
+    "timestamp": "2026-04-28T16:47:32.621652",
+    "content": {
+      "news": [
+        [
+          "全球AI投资：硬件狂飙与应用落差",
+          "https://cloud.tencent.com.cn/developer/article/2655665",
+          "资本过度集中硬件，应用端商业化滞后"
+        ],
+        [
+          "AI行业应用：金融医疗教育制造业案例全解析",
+          "https://blog.csdn.net/zzywxc787/article/details/154915840",
+          "技术原理、典型应用、代码示例完整覆盖"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ],
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ],
+        [
+          "2026中国企业AI应用场景全景报告",
+          "https://www.showapi.com/news/article/69c3865b4ddd79ab67129477",
+          "超68%中大型企业已开展AI场景实践"
+        ],
+        [
+          "英伟达Blackwell GPU供不应求：AI芯片需求爆发",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "算力成为AI发展的关键瓶颈"
+        ],
+        [
+          "AI行业应用：金融、医疗、教育、制造业落地案例",
+          "https://jishuzhan.net/article/1963925204906328065",
+          "四大核心行业的具体应用深度解析"
+        ],
+        [
+          "AI赛道最大金主：英伟达密集出手，超级独角兽诞生",
+          "https://m.36kr.com/p/3716969592927621",
+          "短短两个多月时间内多次投资布局"
+        ],
+        [
+          "AI大模型图鉴2026：谁在造神，谁在守夜",
+          "https://www.woshipm.com/ai/6376638.html",
+          "技术从来不是中性的，每个选择都有代价"
+        ],
+        [
+          "OpenAI再融资1220亿美元：成全球估值最高AI创企",
+          "https://www.jiemian.com/article/14193337.html",
+          "Anthropic正推进600亿美元融资计划"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-27",
     "timestamp": "2026-04-27T16:21:04.045049",
     "content": {
