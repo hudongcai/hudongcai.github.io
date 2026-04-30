@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-04-30",
+    "timestamp": "2026-04-30T16:14:08.752502",
+    "content": {
+      "news": [
+        [
+          "AI行业应用：金融医疗教育制造业案例全解析",
+          "https://blog.csdn.net/zzywxc787/article/details/154915840",
+          "技术原理、典型应用、代码示例完整覆盖"
+        ],
+        [
+          "48小时连发5款大模型：阿里Wan2.7、谷歌Gemma4",
+          "https://cloud.tencent.com.cn/developer/article/2650738",
+          "MoE架构普及、端侧部署成熟、多模态成标配"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ],
+        [
+          "2026年AI圈动态盘点：模型闪电战与智能体落地",
+          "https://xueqiu.com/4092447343/383054216",
+          "从OpenAI到阿里千问，行业格局持续重塑"
+        ],
+        [
+          "国产大模型密集发布：DeepSeek V4、智谱GLM-5.1",
+          "https://aicode.cc/2026-04-10-e1de1862-b997-4ac7-a4e2-531cc4ac4610.html",
+          "国产模型取得关键技术突破"
+        ],
+        [
+          "2026中国企业AI应用场景全景报告",
+          "https://www.showapi.com/news/article/69c3865b4ddd79ab67129477",
+          "超68%中大型企业已开展AI场景实践"
+        ],
+        [
+          "阿里千问登顶全球调用榜：2026年4月AI圈动态",
+          "https://blog.csdn.net/weixin_41908519/article/details/159963116",
+          "从OpenAI刷新纪录到阿里千问登顶"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100 - 硅谷动力",
+          "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml",
+          "唯一评判标准交给实际应用效果"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-29",
     "timestamp": "2026-04-29T16:24:23.968672",
     "content": {
