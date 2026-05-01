@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-05-01",
+    "timestamp": "2026-05-01T15:49:04.834133",
+    "content": {
+      "news": [
+        [
+          "全球AI投资：硬件狂飙与应用落差",
+          "https://cloud.tencent.com.cn/developer/article/2655665",
+          "资本过度集中硬件，应用端商业化滞后"
+        ],
+        [
+          "DeepSeek V4规格曝光：1万亿参数+100万上下文",
+          "https://blog.wenhaofree.com/posts/articles/2026-04-11-deepseek-v4-spec-leaks/",
+          "国产大模型开启算力军备竞赛新纪元"
+        ],
+        [
+          "OpenAI完成1100亿美元融资：英伟达、软银、亚马逊重金押注",
+          "https://finance.sina.com.cn/roll/2026-03-02/doc-inhpqqum4668320.shtml",
+          "刷新全球私营科技公司单笔融资纪录"
+        ],
+        [
+          "AI+行业落地指南：制造业、医疗、零售案例解析",
+          "https://cloud.tencent.com/developer/article/2624482",
+          "避免认知两极化、应用碎片化等常见误区"
+        ],
+        [
+          "2026年AI巨头全景深度解析：九大公司模型与资本博弈",
+          "https://zhuanlan.zhihu.com/p/2010476815681071043",
+          "OpenAI、Google DeepMind、Anthropic、Meta竞争格局"
+        ],
+        [
+          "2026中国企业AI应用场景报告 - InfoQ",
+          "https://www.infoq.cn/article/4c1lsTMm8kO4XAJuYpfz",
+          "金融、零售、能源、制造等重点行业拆解"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100 - 硅谷动力",
+          "http://www.ciweek.com/article/2026/0413/A2026041335128.shtml",
+          "唯一评判标准交给实际应用效果"
+        ],
+        [
+          "2026年Q1 AI融资疯了：1890亿美元单月纪录",
+          "https://simonaking.com/blog/ai-funding-2026-q1/",
+          "全球创业公司融资总额创历史新高"
+        ],
+        [
+          "2026年AI大模型最新动态：从架构革新到Agent爆发",
+          "https://www.sohu.com/a/980715205_122619244",
+          "智能体成为行业共识的应用方向"
+        ],
+        [
+          "从技术模型到场景落地：医疗AI如何真正走进医院",
+          "https://www3.xinhuanet.com/tech/20260415/ddfdbcb12bc94eaf968dd314424f3582/c.html",
+          "AI辅助诊断在多家医院实现规模化应用"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-04-30",
     "timestamp": "2026-04-30T16:14:08.752502",
     "content": {
