@@ -1,5 +1,63 @@
 [
   {
+    "date": "2026-05-07",
+    "timestamp": "2026-05-07T16:44:51.885280",
+    "content": {
+      "news": [
+        [
+          "国产大模型密集发布：DeepSeek V4、智谱GLM-5.1",
+          "https://aicode.cc/2026-04-10-e1de1862-b997-4ac7-a4e2-531cc4ac4610.html",
+          "国产模型取得关键技术突破"
+        ],
+        [
+          "2026全国企业AI创新案例TOP100正式发布",
+          "http://www.enet.com.cn/article/2026/0413/A202604131275279.html",
+          "产业智能化的实战检阅，覆盖多个行业"
+        ],
+        [
+          "2026年4月AI行业全景扫描：巨头融资创新高",
+          "https://www.msn.cn/zh-cn/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2026%E5%B9%B44%E6%9C%88ai%E8%A1%8C%E4%B8%9A%E5%85%A8%E6%99%AF%E6%89%AB%E6%8F%8F-%E5%B7%82%E5%A4%B4%E8%9E%8D%E8%B5%84%E5%88%9B%E6%96%B0%E9%AB%98-%E6%A8%A1%E5%9E%8B%E8%BF%AD%E4%BB%A3%E6%8F%90%E9%80%9F-%E6%99%BA%E8%83%BD%E4%BD%93%E6%97%B6%E4%BB%A3%E5%90%AF%E5%B9%95/ar-AA20qJiq",
+          "头部企业持续重塑行业格局"
+        ],
+        [
+          "万字长文拆解DeepSeek大模型技术演进",
+          "https://cloud.tencent.com/developer/article/2650758",
+          "从算力军备竞赛到架构创新"
+        ],
+        [
+          "从技术模型到场景落地：医疗AI如何真正走进医院",
+          "https://www3.xinhuanet.com/tech/20260415/ddfdbcb12bc94eaf968dd314424f3582/c.html",
+          "AI辅助诊断在多家医院实现规模化应用"
+        ],
+        [
+          "48小时连发5款大模型：阿里Wan2.7、谷歌Gemma4",
+          "https://cloud.tencent.com.cn/developer/article/2650738",
+          "MoE架构普及、端侧部署成熟、多模态成标配"
+        ],
+        [
+          "OpenAI再融资1220亿美元：成全球估值最高AI创企",
+          "https://www.jiemian.com/article/14193337.html",
+          "Anthropic正推进600亿美元融资计划"
+        ],
+        [
+          "2026国产AI突围战：DeepSeek、通义千问、豆包",
+          "https://www.pconline.com.cn/ai/article/1549967.html",
+          "国产AI模型凭借本土化优势强势突围"
+        ],
+        [
+          "DeepSeek-V3亮相：推理能力超越GPT-4o",
+          "https://www.zhifeiya.cn/news/2026-04-07-deepseek-v3-gpt-4o",
+          "国产大模型新突破，代码能力大幅提升"
+        ],
+        [
+          "2026年全球模型巨头对比：Anthropic、Google、OpenAI",
+          "https://www.sohu.com/a/1008612733_121755728",
+          "商业模式以C端订阅和B端API为主"
+        ]
+      ]
+    }
+  },
+  {
     "date": "2026-05-06",
     "timestamp": "2026-05-06T16:23:39.925616",
     "content": {
