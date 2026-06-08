@@ -28,7 +28,7 @@
   --border: #CBD5E1;
   
   /* Footer */
-  --footer-bg: linear-gradient(135deg, #1A5F7A, #0F172A);
+  --footer-bg: #e2e8f0;
   
   /* 周报标题区 */
   --week-header-bg: linear-gradient(135deg, rgba(26, 95, 122, 0.08), rgba(87, 197, 182, 0.1));
@@ -137,6 +137,11 @@ body {
   width: auto;
   object-fit: contain;
 }
+
+/* 双主题Logo切换 */
+.logo-dark { display: none; }
+[data-theme="dark"] .logo-light { display: none; }
+[data-theme="dark"] .logo-dark { display: inline; }
 
 .header-title {
   font-size: 2rem;
@@ -445,7 +450,7 @@ body {
 
 [data-theme="light"] .footer-slogan,
 [data-theme="light"] .footer-link {
-  color: #FFFFFF !important;
+  color: #1A5F7A !important;
 }
 
 .footer-content {

@@ -292,7 +292,7 @@ def generate_week_html(week_num, cn_number, date_str, content_data):
   <header class="header">
     <div class="container">
       <div class="header-brand">
-        <img src="../assets/logo.png" alt="大秦无人机" class="header-logo">
+        <img src="../assets/logo-light.png" alt="大秦无人机" class="header-logo logo-light"><img src="../assets/logo.png" alt="大秦无人机" class="header-logo logo-dark">
         <h1 class="header-title">大秦无人机低空周报</h1>
         <div class="header-meta">
           <span>📅 更新日期：{date_str}</span>
@@ -322,7 +322,7 @@ def generate_week_html(week_num, cn_number, date_str, content_data):
   <footer class="fixed-footer">
     <div class="footer-content">
       <div class="footer-brand">
-        <img src="../assets/logo.png" alt="大秦无人机" class="footer-logo">
+        <img src="../assets/logo-light.png" alt="大秦无人机" class="footer-logo logo-light"><img src="../assets/logo.png" alt="大秦无人机" class="footer-logo logo-dark">
       </div>
       <div class="footer-links">
         <a href="https://kdocs.cn/join/gn3eyg3?f=101vln" target="_blank" class="footer-link">

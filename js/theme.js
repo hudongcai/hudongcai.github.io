@@ -49,7 +49,8 @@
 
     btn.addEventListener('click', function() {
       var current = document.documentElement.getAttribute('data-theme');
-      var next = (current === 'light') ? 'dark' : 'light';
+      var isDarkNow = (current === 'dark');
+      var next = isDarkNow ? 'light' : 'dark';
       applyTheme(next);
       saveTheme(next);
       btn.textContent = (next === 'dark') ? '☀️' : '🌙';
