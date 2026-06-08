@@ -343,14 +343,14 @@ body {
 
 .content-desc {
   font-size: 0.95rem;
-  color: var(--text-gray);
+  color: #FFFFFF;
   margin-bottom: 8px;
   line-height: 1.7;
 }
 
 .content-source {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: #CBD5E1;
 }
 
 .content-source a {
