@@ -16,13 +16,14 @@
   --bg-card: #1E293B;
   --bg-card-hover: #334155;
   
-  /* 文字色彩 */
+  /* 文字色彩 - 提高对比度，增强可读性 */
   --text-white: #FFFFFF;
-  --text-gray: #94A3B8;
+  --text-gray: #CBD5E1;
+  --text-muted: #94A3B8;
   --text-dark: #1E293B;
   
   /* 边框 */
-  --border: #334155;
+  --border: #475569;
   
   /* 主题色块 */
   --topic-1: #EF4444;
@@ -45,11 +46,12 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
   background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2744 100%);
   color: var(--text-white);
   min-height: 100vh;
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: 16px;
 }
 
 /* Container */
@@ -91,8 +93,12 @@ body {
 .header-meta {
   display: flex;
   gap: 20px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-gray);
+}
+
+.header-meta span {
+  margin: 0;
 }
 
 /* Main Content */
@@ -232,7 +238,8 @@ body {
   display: inline-block;
   color: var(--primary-light);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
   margin-bottom: 20px;
   transition: color 0.3s;
 }
@@ -281,18 +288,21 @@ body {
 }
 
 .section-title {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   font-weight: 700;
   margin-bottom: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   border-bottom: 2px solid var(--primary);
   display: flex;
   align-items: center;
   gap: 10px;
+  color: var(--text-white);
 }
 
 .section-title .num {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--primary-light);
 }
 
 .content-list {
@@ -302,10 +312,10 @@ body {
 }
 
 .content-item {
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.03);
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
-  border-left: 3px solid var(--topic-1);
+  border-left: 4px solid var(--topic-1);
 }
 
 .content-item:nth-child(2n) { border-left-color: var(--topic-2); }
@@ -314,7 +324,7 @@ body {
 .content-item:nth-child(5n) { border-left-color: var(--topic-5); }
 
 .content-title {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--text-white);
@@ -332,15 +342,15 @@ body {
 }
 
 .content-desc {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-gray);
   margin-bottom: 8px;
+  line-height: 1.7;
 }
 
 .content-source {
-  font-size: 0.8rem;
-  color: var(--text-gray);
-  opacity: 0.7;
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 .content-source a {
@@ -475,11 +485,19 @@ body {
   }
   
   .content-item {
-    padding: 12px 15px;
+    padding: 14px 16px;
   }
   
   .content-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
+  }
+  
+  .content-desc {
+    font-size: 0.9rem;
+  }
+  
+  .content-source {
+    font-size: 0.8rem;
   }
   
   .footer-content {
