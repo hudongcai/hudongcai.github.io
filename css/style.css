@@ -1,29 +1,37 @@
 /* ============================================
    大秦无人机低空周报 - 全局样式表
-   深色主题 + 响应式布局
+   暗色/亮色 双主题 + 响应式布局
    ============================================ */
 
-/* CSS Variables */
+/* CSS Variables - 亮色主题（默认） */
 :root {
   /* 品牌色彩 */
   --primary: #1A5F7A;
-  --primary-light: #57C5B6;
+  --primary-light: #159A80;
   --accent: #F97316;
-  --accent-light: #FFB366;
+  --accent-light: #E0680A;
   
-  /* 深色背景 */
-  --bg-dark: #0F172A;
-  --bg-card: #1E293B;
-  --bg-card-hover: #334155;
+  /* 亮色背景 */
+  --bg-body: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F1F5F9;
+  --bg-item: #F8FAFC;
   
-  /* 文字色彩 - 提高对比度，增强可读性 */
-  --text-white: #FFFFFF;
-  --text-gray: #CBD5E1;
-  --text-muted: #94A3B8;
-  --text-dark: #1E293B;
+  /* 文字色彩 */
+  --text-white: #1E293B;
+  --text-desc: #334155;
+  --text-gray: #475569;
+  --text-muted: #64748B;
+  --text-dark: #0F172A;
   
   /* 边框 */
-  --border: #475569;
+  --border: #CBD5E1;
+  
+  /* Footer */
+  --footer-bg: linear-gradient(135deg, #1A5F7A, #0F172A);
+  
+  /* 周报标题区 */
+  --week-header-bg: linear-gradient(135deg, rgba(26, 95, 122, 0.08), rgba(87, 197, 182, 0.1));
   
   /* 主题色块 */
   --topic-1: #EF4444;
@@ -32,6 +40,28 @@
   --topic-4: #F97316;
   --topic-5: #8B5CF6;
   --topic-6: #EC4899;
+}
+
+/* CSS Variables - 暗色主题 */
+[data-theme="dark"] {
+  --primary-light: #57C5B6;
+  --accent-light: #FFB366;
+  
+  --bg-body: linear-gradient(135deg, #0F172A 0%, #1a2744 100%);
+  --bg-card: #1E293B;
+  --bg-card-hover: #334155;
+  --bg-item: rgba(255, 255, 255, 0.05);
+  
+  --text-white: #FFFFFF;
+  --text-desc: #FFFFFF;
+  --text-gray: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dark: #1E293B;
+  
+  --border: #475569;
+  
+  --footer-bg: linear-gradient(135deg, #0F172A, #1a2744);
+  --week-header-bg: linear-gradient(135deg, rgba(26, 95, 122, 0.3), rgba(87, 197, 182, 0.2));
 }
 
 /* Reset & Base */
@@ -47,11 +77,38 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2744 100%);
+  background: var(--bg-body);
   color: var(--text-white);
   min-height: 100vh;
   line-height: 1.8;
   font-size: 16px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-white);
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--primary-light);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 
 /* Container */
@@ -148,8 +205,12 @@ body {
 
 .week-card:not([style*="opacity"]):hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   background: var(--bg-card-hover);
+}
+
+[data-theme="light"] .week-card:not([style*="opacity"]):hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .week-card-number {
@@ -229,7 +290,7 @@ body {
   text-align: center;
   margin-bottom: 40px;
   padding: 30px;
-  background: linear-gradient(135deg, rgba(26, 95, 122, 0.3), rgba(87, 197, 182, 0.2));
+  background: var(--week-header-bg);
   border-radius: 16px;
   border: 1px solid var(--primary);
 }
@@ -313,7 +374,7 @@ body {
 
 .content-item {
   padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-item);
   border-radius: 8px;
   border-left: 4px solid var(--topic-1);
 }
@@ -343,14 +404,14 @@ body {
 
 .content-desc {
   font-size: 0.95rem;
-  color: #FFFFFF;
+  color: var(--text-desc);
   margin-bottom: 8px;
   line-height: 1.7;
 }
 
 .content-source {
   font-size: 0.85rem;
-  color: #CBD5E1;
+  color: var(--text-gray);
 }
 
 .content-source a {
@@ -376,10 +437,15 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(135deg, var(--bg-dark), #1a2744);
+  background: var(--footer-bg);
   border-top: 1px solid var(--border);
   padding: 15px 0;
   z-index: 1000;
+}
+
+[data-theme="light"] .footer-slogan,
+[data-theme="light"] .footer-link {
+  color: #FFFFFF !important;
 }
 
 .footer-content {
@@ -445,96 +511,36 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .header-logo {
-    height: 45px;
-  }
-  
-  .header-title {
-    font-size: 1.5rem;
-  }
-  
-  .header-meta {
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .topic-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-  
-  .week-card {
-    padding: 20px 15px;
-  }
-  
-  .week-card-number {
-    font-size: 2rem;
-  }
-  
-  .week-title {
-    font-size: 1.6rem;
-  }
-  
-  .week-theme {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
     font-size: 1.1rem;
-    padding: 12px 18px;
   }
   
-  .topic-desc {
-    padding-left: 0;
-  }
-  
-  .content-item {
-    padding: 14px 16px;
-  }
-  
-  .content-title {
-    font-size: 1.05rem;
-  }
-  
-  .content-desc {
-    font-size: 0.9rem;
-  }
-  
-  .content-source {
-    font-size: 0.8rem;
-  }
-  
-  .footer-content {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .footer-links {
-    order: 2;
-    gap: 15px;
-  }
-  
-  .footer-link {
-    padding: 6px 15px;
-    font-size: 0.85rem;
-  }
-  
-  .footer-brand {
-    order: 1;
-  }
-  
-  .footer-logo {
-    height: 30px;
-  }
-  
-  .footer-slogan {
-    font-size: 0.8rem;
-  }
+  .header-logo { height: 45px; }
+  .header-title { font-size: 1.5rem; }
+  .header-meta { flex-direction: column; gap: 5px; }
+  .topic-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+  .week-card { padding: 20px 15px; }
+  .week-card-number { font-size: 2rem; }
+  .week-title { font-size: 1.6rem; }
+  .week-theme { font-size: 1.1rem; padding: 12px 18px; }
+  .topic-desc { padding-left: 0; }
+  .content-item { padding: 14px 16px; }
+  .content-title { font-size: 1.05rem; }
+  .content-desc { font-size: 0.9rem; }
+  .content-source { font-size: 0.8rem; }
+  .footer-content { flex-direction: column; gap: 10px; }
+  .footer-links { order: 2; gap: 15px; }
+  .footer-link { padding: 6px 15px; font-size: 0.85rem; }
+  .footer-brand { order: 1; }
+  .footer-logo { height: 30px; }
+  .footer-slogan { font-size: 0.8rem; }
 }
 
 @media (max-width: 480px) {
-  .topic-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .footer-links {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  .topic-grid { grid-template-columns: 1fr 1fr; }
+  .footer-links { flex-wrap: wrap; gap: 10px; }
 }
