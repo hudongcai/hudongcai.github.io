@@ -346,6 +346,10 @@ def generate_week_html(week_num, cn_number, date_str, content_data):
       <div class="footer-brand">
         <span class="footer-slogan">西北领先的低空数字经济服务商</span>
       </div>
+      <div class="footer-qr">
+        <img src="../assets/wechat-qr.png" alt="微信二维码" class="footer-qr-img">
+        <span class="footer-qr-text">添加微信</span>
+      </div>
     </div>
   </footer>
 </body>

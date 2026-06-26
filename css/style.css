@@ -514,6 +514,26 @@ body {
   white-space: nowrap;
 }
 
+.footer-qr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-qr-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  object-fit: contain;
+  border: 1px solid var(--border);
+}
+
+.footer-qr-text {
+  font-size: 0.8rem;
+  color: var(--text-white);
+  opacity: 0.7;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .theme-toggle {
