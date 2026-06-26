@@ -223,6 +223,12 @@ def generate_week_html(week_num, cn_number, date_str, content_data=None):
       <div class="stats-section">
         <span id="busuanzi_container_page_pv">本文阅读量：<span id="busuanzi_value_page_pv">-</span> 次</span>
       </div>
+
+      <!-- 微信二维码 -->
+      <div class="wechat-section">
+        <img src="../assets/wechat-qr.png" alt="微信二维码">
+        <p>扫码添加微信 · 获取低空经济深度洞察</p>
+      </div>
     </div>
   </main>
 
@@ -253,10 +259,6 @@ def generate_week_html(week_num, cn_number, date_str, content_data=None):
       </div>
       <div class="footer-brand">
         <span class="footer-slogan">西北领先的低空数字经济服务商</span>
-      </div>
-      <div class="footer-qr">
-        <img src="../assets/wechat-qr.png" alt="微信二维码" class="footer-qr-img">
-        <span class="footer-qr-text">添加微信</span>
       </div>
     </div>
   </footer>
