@@ -71,8 +71,9 @@ def fill_html_content(html_file, content_data):
             section_pattern = re.compile(
                 rf'      <!-- {section_id} [^>]+ -->\n'
                 r'      <div class="content-section">\n'
-                r'        <h2 class="section-title">[^<]+</h2>\n'
-                r'        <div class="content-list">.*?</div>\n'
+                r'        <h2 class="section-title"><span class="num">[^<]+</span>[^<]*</h2>\n'
+                r'        <div class="content-list">.*?\n'
+                r'        </div>\n'
                 r'      </div>',
                 re.DOTALL
             )
